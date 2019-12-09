@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path: 'my-thumbnails',
     loadChildren: () => import('./my-thumbnails/my-thumbnails.module').then( m => m.MyThumbnailsPageModule)
+  },
+  {
+    path: 'all-thumbnails',
+    loadChildren: () => import('./all-thumbnails/all-thumbnails.module').then( m => m.AllThumbnailsPageModule)
   }
 ];
 
