@@ -42,7 +42,7 @@ export class AuthService {
 
   logIn(authRequest: AuthRequest): Observable<User> {
 
-    const authUrl = `${environment.apiUrl}users/login`;
+    const authUrl = `${environment.apiUrl}/users/login`;
    /* const authUrl = 'https://comem-archioweb-2019-2020-g.herokuapp.com/users/login';*/
     return this.http.post<AuthResponse>(authUrl, authRequest).pipe(
       delayWhen(auth => {
