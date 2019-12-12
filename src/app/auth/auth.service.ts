@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { AuthResponse } from '../models/auth-response';
 import { User } from '../models/user';
 import { AuthRequest } from '../models/auth-request';
+import { environment } from 'src/environments/environment';
 
 /**
  * Authentication service for login/logout.
@@ -36,7 +37,8 @@ export class AuthService {
 
   logIn(authRequest: AuthRequest): Observable<User> {
 
-    const authUrl = 'https://comem-archioweb-2019-2020-g.herokuapp.com/users/login';
+    const authUrl = `${environment.apiUrl}/auth`;
+   /* const authUrl = 'https://comem-archioweb-2019-2020-g.herokuapp.com/users/login';*/
     return this.http.post<AuthResponse>(authUrl, authRequest).pipe(
       map(auth => {
         this.authSource.next(auth);
