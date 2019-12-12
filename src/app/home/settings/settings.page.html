@@ -10,7 +10,70 @@
 
   </ion-toolbar>
 </ion-header>
-
-<ion-content class="ion-padding">
-  Settings
-</ion-content>
+  <ion-content class="ion-padding">
+    <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div class="title">Notifications settings</div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="notifs-setting-line">
+          <ion-col>
+            <div>Someone makes a guess</div>
+          </ion-col>
+          <ion-col>
+            <ion-toggle [(ngModel)]="pepperoni"></ion-toggle>
+          </ion-col>
+        </ion-row>
+        <ion-row class="notifs-setting-line">
+          <ion-col>
+            <div>New thumbnail posted</div>
+          </ion-col>
+          <ion-col>
+            <ion-toggle [(ngModel)]="pepperoni"></ion-toggle>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div class="title">Profile</div>
+          </ion-col>
+        </ion-row>
+        <ion-row class="profile-line">
+          <ion-col>
+            <ion-avatar>
+              <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+            </ion-avatar>
+          </ion-col>
+          <ion-col>
+            <ion-fab-button>
+              <ion-icon name="create"></ion-icon>
+            </ion-fab-button>
+          </ion-col>
+        </ion-row>
+        <ion-row class="profile-line">
+          <ion-col>
+            <ion-label class="label" position="floating">username</ion-label>
+            <div>John Doe</div>
+          </ion-col>
+          <ion-col>
+            <ion-fab-button>
+              <ion-icon name="create"></ion-icon>
+            </ion-fab-button>
+          </ion-col>
+        </ion-row>
+        <ion-row class="profile-line">
+          <ion-col>
+            <ion-label class="label" position="floating">password</ion-label>
+            <div>•••••••••••••••••</div>
+          </ion-col>
+          <ion-col>
+            <ion-fab-button>
+                <ion-icon name="create"></ion-icon>
+            </ion-fab-button>
+          </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-button class="save-button" expand="block">Save changes</ion-button>
+  </ion-content>
+  
+  
