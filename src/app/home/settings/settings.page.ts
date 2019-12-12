@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
@@ -7,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private auth: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
+  }
+
+  logOut() {
+    this.auth.logOut();
+    this.router.navigateByUrl('/login');
   }
 
 }
