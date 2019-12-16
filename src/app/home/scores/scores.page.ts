@@ -1,15 +1,28 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-scores',
   templateUrl: './scores.page.html',
   styleUrls: ['./scores.page.scss'],
 })
+
 export class ScoresPage implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
+    const url = `${environment.apiUrl}/users`;
+    this.http.get(url).subscribe(users => {
+      console.log(`Users loaded`, users);
+    });
+  }
+
+  get() {
+    var data = this.http.get('https://comem-archioweb-2019-2020-g.herokuapp.com/users/');
+    return data;
   }
 
 }
