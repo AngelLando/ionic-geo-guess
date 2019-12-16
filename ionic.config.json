@@ -1,5 +1,7 @@
 {
   "name": "ionic-geo-guess",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
