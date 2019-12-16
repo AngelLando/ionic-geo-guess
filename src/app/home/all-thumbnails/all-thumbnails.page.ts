@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Thumbnail } from 'src/app/models/thumbnail';
 
 @Component({
   selector: 'app-all-thumbnails',
@@ -10,24 +11,30 @@ import { environment } from 'src/environments/environment';
 })
 
 export class AllThumbnailsPage implements OnInit {
-
+  thumbnails: Thumbnail[];
   constructor(
     private auth: AuthService,
     public http: HttpClient
-  ) { }
+  ) { 
+    this.thumbnails = [];
+    }
 
   ngOnInit() {
     const url = `${environment.apiUrl}/thumbnails`;
-    this.http.get(url).subscribe(thumbnails => {
+    this.http.get<Thumbnail[]>(url).subscribe(thumbnails => {
+    this.thumbnails=thumbnails;
       console.log(`Thumbnails loaded`, thumbnails);
     });
   }
-/*
+
   ionViewDidLoad() {
     const url = 'https://comem-archioweb-2019-2020-g.herokuapp.com/thumbnails';
     this.http.get(url).subscribe(thumbnails => {
       console.log(`Thumbnails loaded`, thumbnails);
     });
-  }*/
+  }
 
 }
+
+
+
