@@ -1,9 +1,27 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Home</ion-title>
-  </ion-toolbar>
+	<ion-toolbar color="primary">
+		<ion-title>Home</ion-title>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  All thumbnails
-</ion-content>
+	<ion-card *ngFor="let thumbnail of thumbnails">
+		<div class ="container">
+		<img class="thumbnail_img"  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
+							<ion-card-content class="overtext">Il y a 200 jours</ion-card-content>
+							</div>
+		<ion-card-header>
+			<ion-row>
+				<ion-col>
+					<ion-card-subtitle [(ngModel)]="thumbnail.title" ngDefaultControl>{{ thumbnail.title }}</ion-card-subtitle>
+					<ion-card-title>Username</ion-card-title>
+				</ion-col>
+				<ion-col>
+					<ion-fab-button float-right>
+						<ion-icon name="arrow-round-forward"></ion-icon>
+					</ion-fab-button>
+				</ion-col>
+							</ion-row>
+			</ion-card-header>
+			</ion-card>
+		</ion-content>
