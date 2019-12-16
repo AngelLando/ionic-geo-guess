@@ -20,7 +20,6 @@ export class ScoresPage implements OnInit {
 
   ngOnInit() {
     const url = `${environment.apiUrl}/users`;
-    let tab = [];
     this.http.get<User[]>(url).subscribe(data => {
       this.users = data;
       // Order by totalScore

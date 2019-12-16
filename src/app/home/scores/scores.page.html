@@ -5,6 +5,16 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+
+    <ion-segment (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="friends" selected>
+          <ion-label>Friends</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="enemies">
+          <ion-label>Enemies</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
   <ion-item *ngFor="let user of users | slice:0:10; let i=index">
     <ion-avatar slot="start">
       <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
