@@ -20,9 +20,4 @@ export class ScoresPage implements OnInit {
     });
   }
 
-  get() {
-    var data = this.http.get('https://comem-archioweb-2019-2020-g.herokuapp.com/users/');
-    return data;
-  }
-
 }
