@@ -1,4 +1,4 @@
-export class User {
+export class Thumbnail {
     _id: string;
     title: string;
     img: string;
