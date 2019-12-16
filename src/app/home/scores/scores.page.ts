@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-scores',
@@ -11,12 +12,19 @@ import { environment } from 'src/environments/environment';
 
 export class ScoresPage implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  users: User[];
+
+  constructor(private http: HttpClient) {
+    this.users = [];
+  }
 
   ngOnInit() {
     const url = `${environment.apiUrl}/users`;
-    this.http.get(url).subscribe(users => {
-      console.log(`Users loaded`, users);
+    let tab = [];
+    this.http.get<User[]>(url).subscribe(data => {
+      this.users = data;
+      // Order by totalScore
+      this.users.sort((a, b) => b.totalScore - a.totalScore);
     });
   }
 
