@@ -5,9 +5,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-content padding>
     <!-- ... -->
-    * <button ion-button (click)="takePicture()">Take picture</button> *
+     <ion-button (click)="takePicture()">Take pictures</ion-button> 
     <img *ngIf="pictureData" src="data:image/jpeg;base64,{{ pictureData }}" />
-  </ion-content>
 </ion-content>

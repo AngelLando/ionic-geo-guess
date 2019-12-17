@@ -8,10 +8,13 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 })
 export class CreateThumbnailPage implements OnInit {
   pictureData: string;
+  //
   takePicture() {
+    console.log(this.camera);
+
     const options: CameraOptions = {
       quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
+      destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
     };
