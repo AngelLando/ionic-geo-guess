@@ -5,5 +5,9 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  Create thumbnail
+  <ion-content padding>
+    <!-- ... -->
+    * <button ion-button (click)="takePicture()">Take picture</button> *
+    <img *ngIf="pictureData" src="data:image/jpeg;base64,{{ pictureData }}" />
+  </ion-content>
 </ion-content>

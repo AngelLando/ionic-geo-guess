@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorProvider } from './auth/auth-interceptor.service';
+import { Camera } from '@ionic-native/camera/ngx';
 
 import { IonicStorageModule } from '@ionic/storage';
 
@@ -19,6 +20,7 @@ import { IonicStorageModule } from '@ionic/storage';
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, IonicStorageModule.forRoot()],
   providers: [
+    Camera,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
