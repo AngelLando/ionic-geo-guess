@@ -19,7 +19,7 @@ export class HomePage {
     this.tabs = [
       { title: 'Home', icon: 'home', path: 'all-thumbnails' },
       { title: 'Scores', icon: 'trophy', path: 'scores'},
-      { title: 'test add', icon: 'list', path: 'create-thumbnail'},
+      { title: '', icon: '', path: ''},
       { title: 'My thumbnails', icon: 'list', path: 'my-thumbnails'},
       { title: 'Settings', icon: 'settings', path: 'settings'},
     ];
