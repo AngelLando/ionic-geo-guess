@@ -10,8 +10,6 @@ export class CreateThumbnailPage implements OnInit {
   pictureData: string;
   //
   takePicture() {
-    console.log(this.camera);
-
     const options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.FILE_URI,
