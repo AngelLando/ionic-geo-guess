@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-settings',
@@ -10,12 +11,17 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class SettingsPage implements OnInit {
 
+  user: User;
+
   constructor(
     private auth: AuthService,
     private router: Router
   ) { }
 
   ngOnInit() {
+    this.auth.getUser().subscribe(user => {
+      this.user = user;
+    });
   }
 
   logOut() {
