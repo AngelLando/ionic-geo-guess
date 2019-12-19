@@ -13,9 +13,11 @@ import { User } from 'src/app/models/user';
 export class ScoresPage implements OnInit {
 
   users: User[];
+  location: string;
 
   constructor(private http: HttpClient) {
     this.users = [];
+    this.location = 'city';
   }
 
   ngOnInit() {
