@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Signup</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form #signupForm="ngForm" (submit)="onSubmit(signupForm)">
+    <ion-list>
+      <!-- Username input -->
+      <ion-item>
+        <ion-label position="floating">Username</ion-label>
+        <ion-input inputmode="text" required="true" name="username"
+         ></ion-input>
+      </ion-item>
+  
+  
+      <!-- Password input -->
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input inputmode="text" required="true" type="password" name="password"
+         ></ion-input>
+      </ion-item>
+
+          <!-- confirm Password input -->
+          <ion-item>
+            <ion-label position="floating">Confirm password</ion-label>
+            <ion-input inputmode="text" required="true" type="password" name="confirmpassword"
+             ></ion-input>
+          </ion-item>
+        </ion-list>
+
+
+    <div class="ion-padding">
+  
+      <!-- Submit button -->
+      <ion-button class="test" type="submit" expand="block" >Sign up</ion-button>
+  
+    </div>
+  </form>
+  <p class="ion-text-center">Already have an account? <a href="login">Log in</a>.</p>
+
+</ion-content>

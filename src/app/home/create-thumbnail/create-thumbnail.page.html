@@ -6,6 +6,7 @@
 
 <ion-content class="ion-padding">
     <!-- ... -->
+    <p>{{error}}</p>
      <ion-button (click)="takePicture()">Take pictures</ion-button> 
     <img *ngIf="pictureData" src="data:image/jpeg;base64,{{ pictureData }}" />
 </ion-content>
