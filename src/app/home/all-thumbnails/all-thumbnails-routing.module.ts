@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: AllThumbnailsPage
+  },
+  {
+    path: 'guess',
+    loadChildren: () => import('./guess/guess.module').then( m => m.GuessPageModule)
   }
 ];
 
