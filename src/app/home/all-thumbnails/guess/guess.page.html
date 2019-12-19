@@ -1,9 +1,30 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>guess</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Make a guess</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-<p>make a guess</p>
+
+  <div class="container">
+    <div class="leaflet-map" leaflet [leafletOptions]="mapOptions" (leafletMapReady)="onMapReady($event)"></div>
+    <ion-grid class="over" style="height: 100%; width: 50%">
+      <ion-card class="thumbnail">
+        <ion-card-header>
+          <ion-row>
+            <ion-col size="9" class="title">
+              <ion-card-subtitle>Un titre</ion-card-subtitle>
+            </ion-col>
+            <ion-col size="3">
+              <ion-icon name="arrow-dropdown" class="ion-float-right"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-card-header>
+        <div class="container">
+          <img class="thumbnailImg"  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw=="/>
+        </div>
+      </ion-card>   
+    </ion-grid>
+  </div>
+
 </ion-content>

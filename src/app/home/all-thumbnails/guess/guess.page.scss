@@ -1,0 +1,32 @@
+.container {
+    position: relative;
+    height: 100%;
+  }
+
+  .leaflet-map {
+    height: 100%;
+  }
+  
+  .over{
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+  }
+  
+  .thumbnailImg{
+    max-height: 300px;
+  }
+
+  .sc-ion-card-md-h {
+      font-size: 25px;
+  }
+
+  ion-card-subtitle {
+      font-size: 18px;
+  }
+
+  ion-card {
+      margin-top: 1em;
+  }
+  
+

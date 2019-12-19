@@ -14,11 +14,12 @@ import { AuthInterceptorProvider } from './auth/auth-interceptor.service';
 import { Camera } from '@ionic-native/camera/ngx';
 
 import { IonicStorageModule } from '@ionic/storage';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, IonicStorageModule.forRoot()],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, IonicStorageModule.forRoot(), LeafletModule.forRoot()],
   providers: [
     Camera,
     StatusBar,
