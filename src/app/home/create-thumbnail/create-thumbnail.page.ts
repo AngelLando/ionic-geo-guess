@@ -22,8 +22,7 @@ export class CreateThumbnailPage implements OnInit {
       console.warn(`Could not take picture because: ${err.message}`);
     });
   }
-  constructor() { }
-  private camera: Camera
+  constructor(private camera: Camera) { }
 
   ngOnInit() {
   }
