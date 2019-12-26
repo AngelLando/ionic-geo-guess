@@ -5,23 +5,53 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-	<ion-card *ngFor="let thumbnail of thumbnails">
-		<div class ="container">
-		<img class="thumbnail_img"  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
-							<ion-card-content class="overtext">Il y a 200 jours</ion-card-content>
-							</div>
-		<ion-card-header>
-			<ion-row>
-				<ion-col size="9">
-					<ion-card-subtitle [(ngModel)]="thumbnail.title" ngDefaultControl>{{ thumbnail.title }}</ion-card-subtitle>
-					<ion-card-title>Username</ion-card-title>
-				</ion-col>
-				<ion-col size="3">
-					<ion-fab-button href="http://localhost:8100/home/all-thumbnails/guess" class="ion-float-right">
-						<ion-icon name="arrow-round-forward"></ion-icon>
-					</ion-fab-button>
-				</ion-col>
-							</ion-row>
+	<div *ngIf="contentLoaded">
+		<ion-card *ngFor="let thumbnail of thumbnails">
+			<div class ="container">
+				<img class="thumbnail_img"  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
+				<ion-card-content class="overtext">Il y a 200 jours</ion-card-content>
+			</div>
+			<ion-card-header>
+				<ion-row>
+					<ion-col size="9">
+						<ion-card-subtitle [(ngModel)]="thumbnail.title" ngDefaultControl>{{ thumbnail.title }}</ion-card-subtitle>
+						<ion-card-title>Username</ion-card-title>
+					</ion-col>
+					<ion-col size="3">
+						<ion-fab-button href="http://localhost:8100/home/all-thumbnails/guess" class="ion-float-right">
+							<ion-icon name="arrow-round-forward"></ion-icon>
+						</ion-fab-button>
+					</ion-col>
+				</ion-row>
 			</ion-card-header>
-			</ion-card>
-		</ion-content>
+		</ion-card>
+	</div>
+
+	<div *ngIf="!contentLoaded">
+		<ion-card *ngFor="let item of [].constructor(2)">
+			<div class ="container">
+				<ion-skeleton-text style="height: 300px; margin-top: 0px;"></ion-skeleton-text>
+				<ion-card-content class="overtext">
+					<ion-skeleton-text animated style="width: 50px"></ion-skeleton-text>
+				</ion-card-content>
+			</div>
+			<ion-card-header>
+				<ion-row>
+					<ion-col size="9">
+						<ion-card-subtitle>
+							<ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+						</ion-card-subtitle><br>
+						<ion-card-title>
+							<ion-skeleton-text class="wide" animated style="width: 80%"></ion-skeleton-text>
+						</ion-card-title>
+					</ion-col>
+					<ion-col size="3">
+						<ion-fab-button href="http://localhost:8100/home/all-thumbnails/guess" class="ion-float-right">
+							<ion-icon name="arrow-round-forward"></ion-icon>
+						</ion-fab-button>
+					</ion-col>
+				</ion-row>
+			</ion-card-header>
+		</ion-card>
+	</div>
+</ion-content>

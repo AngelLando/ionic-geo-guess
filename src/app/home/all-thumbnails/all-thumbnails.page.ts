@@ -11,18 +11,19 @@ import { Thumbnail } from 'src/app/models/thumbnail';
 })
 
 export class AllThumbnailsPage implements OnInit {
+
   thumbnails: Thumbnail[];
-  constructor(
-    private auth: AuthService,
-    public http: HttpClient
-  ) { 
+  contentLoaded = false;
+
+  constructor(public http: HttpClient) {
     this.thumbnails = [];
-    }
+  }
 
   ngOnInit() {
     const url = `${environment.apiUrl}/thumbnails`;
     this.http.get<Thumbnail[]>(url).subscribe(thumbnails => {
-    this.thumbnails=thumbnails;
+      this.thumbnails = thumbnails;
+      this.contentLoaded = true;
       console.log(`Thumbnails loaded`, thumbnails);
     });
   }
@@ -35,6 +36,3 @@ export class AllThumbnailsPage implements OnInit {
   }
 
 }
-
-
-

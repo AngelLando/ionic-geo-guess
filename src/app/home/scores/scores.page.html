@@ -6,25 +6,41 @@
 
 <ion-content class="ion-padding">
 
-    <ion-segment [(ngModel)]="location" (ionChange)="segmentChanged($event)">
-        <ion-segment-button value="city">
-          <ion-label>City</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="country">
-          <ion-label>Country</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="world">
-            <ion-label>World</ion-label>
-          </ion-segment-button>
-      </ion-segment>
+  <ion-segment [(ngModel)]="location" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="city">
+      <ion-label>City</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="country">
+      <ion-label>Country</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="world">
+        <ion-label>World</ion-label>
+      </ion-segment-button>
+    </ion-segment>
 
-  <ion-item *ngFor="let user of users | slice:0:10; let i=index">
-    <ion-avatar slot="start">
-      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
-    </ion-avatar>
-    <ion-label>
-        <h3 [(ngModel)]="user.username" ngDefaultControl><strong>{{ i+1 }}.</strong> {{ user.username }}</h3>
-    </ion-label>
-        <p [(ngModel)]="user.username" ngDefaultControl>{{ user.totalScore }} points</p>
-  </ion-item>
+  <div *ngIf="contentLoaded">
+    <ion-item *ngFor="let user of users | slice:0:10; let i=index">
+      <ion-avatar slot="start">
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+      </ion-avatar>
+      <ion-label>
+          <h3 [(ngModel)]="user.username" ngDefaultControl><strong>{{ i+1 }}.</strong> {{ user.username }}</h3>
+      </ion-label>
+          <p [(ngModel)]="user.username" ngDefaultControl>{{ user.totalScore }} points</p>
+    </ion-item>
+  </div>
+
+  <div *ngIf="!contentLoaded">
+      <ion-item *ngFor="let item of [].constructor(10)">
+        <ion-avatar slot="start">
+						<ion-skeleton-text></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label>
+            <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+          </ion-label>
+            <p>
+                <ion-skeleton-text animated style="width: 75px"></ion-skeleton-text>
+            </p>
+      </ion-item>
+    </div>
 </ion-content>

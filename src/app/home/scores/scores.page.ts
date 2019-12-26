@@ -14,6 +14,7 @@ export class ScoresPage implements OnInit {
 
   users: User[];
   location: string;
+  contentLoaded = false;
 
   constructor(private http: HttpClient) {
     this.users = [];
@@ -24,6 +25,7 @@ export class ScoresPage implements OnInit {
     const url = `${environment.apiUrl}/users`;
     this.http.get<User[]>(url).subscribe(data => {
       this.users = data;
+      this.contentLoaded = true;
       // Order by totalScore
       this.users.sort((a, b) => b.totalScore - a.totalScore);
     });
