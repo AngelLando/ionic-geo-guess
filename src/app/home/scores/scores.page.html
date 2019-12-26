@@ -5,6 +5,9 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <ion-refresher slot="fixed" id="refresher" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
   <ion-segment [(ngModel)]="location" (ionChange)="segmentChanged($event)">
     <ion-segment-button value="city">

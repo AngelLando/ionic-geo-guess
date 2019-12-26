@@ -35,4 +35,14 @@ export class ScoresPage implements OnInit {
     console.log('Segment changed', ev);
   }
 
+  doRefresh(ev: any) {
+    this.contentLoaded = false;
+
+    this.ngOnInit();
+
+    setTimeout(() => {
+      ev.target.complete();
+    }, 500);
+  }
+
 }

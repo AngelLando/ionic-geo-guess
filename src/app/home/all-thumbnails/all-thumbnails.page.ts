@@ -35,4 +35,14 @@ export class AllThumbnailsPage implements OnInit {
     });
   }
 
+  doRefresh(ev: any) {
+    this.contentLoaded = false;
+
+    this.ngOnInit();
+
+    setTimeout(() => {
+      ev.target.complete();
+    }, 500);
+  }
+
 }
