@@ -28,6 +28,10 @@ export class MyThumbnailsPage implements OnInit {
       this.user = user;
     });
 
+    this.fetchMyThumbnails();
+  }
+
+  fetchMyThumbnails() {
     const url = `${environment.apiUrl}/thumbnails`;
     this.http
     .get<Thumbnail[]>(url)

@@ -20,11 +20,14 @@ export class AllThumbnailsPage implements OnInit {
   }
 
   ngOnInit() {
+    this.fetchThumbnails();
+  }
+
+  fetchThumbnails() {
     const url = `${environment.apiUrl}/thumbnails`;
     this.http.get<Thumbnail[]>(url).subscribe(thumbnails => {
       this.thumbnails = thumbnails;
       this.contentLoaded = true;
-      console.log(`Thumbnails loaded`, thumbnails);
     });
   }
 
