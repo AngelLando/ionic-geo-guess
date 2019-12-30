@@ -9,6 +9,10 @@
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
   
+    <div *ngIf="!thumbnails.length > 0">
+      <p>You haven't posted thumbnails yet.</p>
+    </div>
+
     <div>
       <ion-card *ngFor="let thumbnail of thumbnails">
         <div class ="container">
