@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: MyThumbnailsPage
+  },
+  {
+    path: 'edit-thumbnail',
+    loadChildren: () => import('./edit-thumbnail/edit-thumbnail.module').then( m => m.EditThumbnailPageModule)
   }
 ];
 

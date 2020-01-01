@@ -1,46 +1,40 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { AuthService } from 'src/app/auth/auth.service';
 import { Thumbnail } from 'src/app/models/thumbnail';
+import { ThumbnailsService } from 'src/app/services/thumbnails.service';
 import { User } from 'src/app/models/user';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-my-thumbnails',
   templateUrl: './my-thumbnails.page.html',
   styleUrls: ['./my-thumbnails.page.scss'],
 })
+
 export class MyThumbnailsPage implements OnInit {
 
   thumbnails: Thumbnail[];
   user: User;
-
-  constructor(
-    public http: HttpClient,
-    private auth: AuthService,
-    ) {
+  contentLoaded = false;
+  
+  constructor(private thumbnailsService: ThumbnailsService) {
     this.thumbnails = [];
   }
 
   ngOnInit() {
-    this.auth.getUser().subscribe(user => {
-      this.user = user;
-    });
-
-    this.fetchMyThumbnails();
   }
 
-  fetchMyThumbnails() {
-    const url = `${environment.apiUrl}/thumbnails`;
-    this.http
-    .get<Thumbnail[]>(url)
-    .pipe(map(res => {
-      return res.filter(thumbnails => thumbnails.user_id == this.user._id);
-    }))
-    .subscribe(thumbnails => {
+  ionViewWillEnter() {
+    this.thumbnailsService.fetchMyThumbnails().subscribe(thumbnails => {
       this.thumbnails = thumbnails;
+      this.contentLoaded = true;
     });
+  }
+
+  doRefresh(ev: any) {
+    this.ionViewWillEnter();
+
+    setTimeout(() => {
+      ev.target.complete();
+    }, 500);
   }
 
 }

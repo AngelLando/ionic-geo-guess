@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/auth/auth.service';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { Thumbnail } from 'src/app/models/thumbnail';
+import { ThumbnailsService } from 'src/app/services/thumbnails.service';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-all-thumbnails',
@@ -13,33 +12,31 @@ import { Thumbnail } from 'src/app/models/thumbnail';
 export class AllThumbnailsPage implements OnInit {
 
   thumbnails: Thumbnail[];
+  user: User;
   contentLoaded = false;
 
-  constructor(public http: HttpClient) {
-    this.thumbnails = [];
+  constructor(private thumbnailsService: ThumbnailsService) {
   }
 
   ngOnInit() {
-    this.fetchThumbnails();
   }
 
-  fetchThumbnails() {
-    const url = `${environment.apiUrl}/thumbnails`;
-    this.http.get<Thumbnail[]>(url).subscribe(thumbnails => {
+  ionViewWillEnter() {
+    this.thumbnailsService.fetchMyThumbnails().subscribe(thumbnails => {
       this.thumbnails = thumbnails;
       this.contentLoaded = true;
     });
   }
 
-  ionViewDidLoad() {
+/*   ionViewDidLoad() {
     const url = 'https://comem-archioweb-2019-2020-g.herokuapp.com/thumbnails';
     this.http.get(url).subscribe(thumbnails => {
       console.log(`Thumbnails loaded`, thumbnails);
     });
-  }
+  } */
 
   doRefresh(ev: any) {
-    this.ngOnInit();
+    this.ionViewWillEnter();
 
     setTimeout(() => {
       ev.target.complete();
