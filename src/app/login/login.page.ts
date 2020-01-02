@@ -25,6 +25,8 @@ export class LoginPage {
    */
   loginError: boolean;
 
+  isLoading = false;
+
   constructor(
     private auth: AuthService,
     private router: Router
@@ -45,9 +47,12 @@ export class LoginPage {
     // Hide any previous login error.
     this.loginError = false;
 
+    this.isLoading = true;
+
     // Perform the authentication request to the API.
     this.auth.logIn(this.authRequest).subscribe({
       next: () => {
+        this.isLoading = false;
         this.router.navigateByUrl('/home/all-thumbnails');
       },
       error: err => {

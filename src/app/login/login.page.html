@@ -42,9 +42,12 @@
     </ion-list>
   
     <div class="ion-padding">
-  
+
       <!-- Submit button -->
-      <ion-button class="test" type="submit" expand="block" [disabled]="loginForm.invalid">Login</ion-button>
+      <ion-button class="test" type="submit" expand="block" [disabled]="loginForm.invalid">
+        <ion-spinner color="light" name="dots" *ngIf="isLoading"></ion-spinner>
+        <span *ngIf="!isLoading">Login</span>
+      </ion-button>
   
       <!-- Error message displayed if the login failed -->
       <ion-text color='danger' *ngIf="loginError">Username or password is invalid.</ion-text>
