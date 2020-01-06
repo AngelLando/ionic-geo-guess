@@ -53,7 +53,7 @@ export class ThumbnailsService {
     .get<Thumbnail>(this.url + `/${thumbnailId}`);
   }
 
-  getUniqueThumbnail(id: string) {
+/*   getUniqueThumbnail(id: string) {
     return this.http
       .get<ThumbnailData>(
         this.url + `/thumbnails/${id}`
@@ -70,6 +70,6 @@ export class ThumbnailsService {
           );
         })
       );
-  }
+  } */
 
 }
