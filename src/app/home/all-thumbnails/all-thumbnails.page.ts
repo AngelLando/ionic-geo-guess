@@ -22,7 +22,7 @@ export class AllThumbnailsPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.thumbnailsService.fetchMyThumbnails().subscribe(thumbnails => {
+    this.thumbnailsService.fetchThumbnails().subscribe(thumbnails => {
       this.thumbnails = thumbnails;
       this.contentLoaded = true;
     });

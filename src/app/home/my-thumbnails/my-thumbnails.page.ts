@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Thumbnail } from 'src/app/models/thumbnail';
 import { ThumbnailsService } from 'src/app/services/thumbnails.service';
 import { User } from 'src/app/models/user';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-my-thumbnails',
@@ -9,9 +10,10 @@ import { User } from 'src/app/models/user';
   styleUrls: ['./my-thumbnails.page.scss'],
 })
 
-export class MyThumbnailsPage implements OnInit {
+export class MyThumbnailsPage implements OnInit, OnDestroy {
 
   thumbnails: Thumbnail[];
+  private thumbnailSub: Subscription;
   user: User;
   contentLoaded = false;
   
@@ -20,6 +22,9 @@ export class MyThumbnailsPage implements OnInit {
   }
 
   ngOnInit() {
+    this.thumbnailSub = this.thumbnailsService.thumbnails.subscribe(thumbnails => {
+      this.thumbnails = thumbnails;
+    })
   }
 
   ionViewWillEnter() {
@@ -35,6 +40,12 @@ export class MyThumbnailsPage implements OnInit {
     setTimeout(() => {
       ev.target.complete();
     }, 500);
+  }
+
+  ngOnDestroy() {
+    if(this.thumbnailSub) {
+      this.thumbnailSub.unsubscribe();
+    }
   }
 
 }
