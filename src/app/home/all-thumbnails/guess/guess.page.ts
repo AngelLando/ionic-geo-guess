@@ -32,6 +32,28 @@ export class GuessPage implements OnInit {
     setTimeout(() => map.invalidateSize(), 0);
   }
 
+  public myClass = 'show';
+  public iconRight = 'hide';
+  public buttonIcon: string = "arrow-dropdown";
+
+  toggleClass(getIcon: string){
+    if (this.myClass=="show") {
+      this.myClass='hide';
+    } else {
+      this.myClass='show';
+    };
+    if (this.iconRight=="hide") {
+      this.iconRight='show';
+    } else {
+      this.iconRight='hide';
+    };
+    if (this.buttonIcon === 'arrow-dropright') {
+      this.buttonIcon = "arrow-dropdown";
+    }
+    else if (this.buttonIcon === 'arrow-dropdown') {
+      this.buttonIcon = "arrow-dropright";
+    }
+  }
 }
 
 

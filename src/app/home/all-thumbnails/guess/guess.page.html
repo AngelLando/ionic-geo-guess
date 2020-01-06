@@ -11,16 +11,16 @@
     <ion-grid class="over" style="width: 50%">
       <ion-card class="thumbnail">
         <ion-card-header>
-          <ion-row>
+          <ion-row (click)="toggleClass()">
             <ion-col size="9" class="title">
               <ion-card-subtitle>Un titre</ion-card-subtitle>
             </ion-col>
             <ion-col size="3">
-              <ion-icon name="arrow-dropdown" class="ion-float-right"></ion-icon>
+              <ion-icon [name]="buttonIcon"></ion-icon>
             </ion-col>
           </ion-row>
         </ion-card-header>
-        <div class="container">
+        <div class="container" [className]="myClass">
           <img class="thumbnailImg"  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw=="/>
         </div>
       </ion-card>   
