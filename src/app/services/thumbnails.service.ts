@@ -43,8 +43,7 @@ export class ThumbnailsService {
     return this.http
     .get<Thumbnail[]>(this.url)
     .pipe(map(res => {      
-      // return res.filter(thumbnails => thumbnails.user_id == this.user._id);
-      return res.filter(thumbnails => thumbnails.user_id == '5dbaec66b6c35e0017c82115');
+      return res.filter(thumbnails => thumbnails.user_id == this.user._id);
     }));
   }
 
