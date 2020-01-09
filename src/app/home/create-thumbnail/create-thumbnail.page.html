@@ -6,6 +6,20 @@
 
 <ion-content class="ion-padding">
     <!-- ... -->
+    <form onsubmit="processForm(event)">
      <ion-button (click)="takePicture()">Take pictures</ion-button> 
-    <img *ngIf="pictureData" src="data:image/jpeg;base64,{{ pictureData }}" />
+    <img *ngIf="pictureData" src="{{picture.url}}" />
+    <ion-item>
+      <ion-label position="floating">Title</ion-label>
+      <ion-input required type="text"></ion-input>
+    </ion-item>
+ 
+    <div class="ion-padding">
+      <ion-button expand="block" type="submit" class="ion-no-margin">Submit thumbnail</ion-button>
+    </div>
+
+  </form>
+  <ion-text *ngIf="coords" >{{coords.longitude}}/</ion-text>
+  <ion-text *ngIf="coords" >{{coords.latitude}}</ion-text>
 </ion-content>
+

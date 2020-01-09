@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -27,6 +28,7 @@ import { ThumbnailsService } from './services/thumbnails.service';
     Camera,
     StatusBar,
     SplashScreen,
+    Geolocation,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorProvider, multi: true }
   ],
