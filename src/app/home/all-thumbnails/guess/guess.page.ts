@@ -5,6 +5,8 @@ import { Thumbnail } from 'src/app/models/thumbnail';
 import { ThumbnailsService } from 'src/app/services/thumbnails.service';
 import { NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+/*import { Geoposition } from '@ionic-native/geolocation/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';*/
 
 @Component({
   selector: 'app-guess',
@@ -15,6 +17,7 @@ import { Subscription } from 'rxjs';
 export class GuessPage implements OnInit {
   thumbnail: Thumbnail;
   guessId: string;
+  /*coords:Coordinates;*/
   isLoading = false;
   private thumbnailSub: Subscription;
   mapOptions: MapOptions;
@@ -22,14 +25,15 @@ export class GuessPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private thumbnailsService: ThumbnailsService,
-    private navCtrl: NavController
-  ) {
+    private navCtrl: NavController,
+    /*private geolocation: Geolocation */
+    ) {
 
     this.mapOptions = {
       layers: [
         tileLayer(
           'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          { maxZoom: 18 }
+          { maxZoom: 3 }
         )
       ],
       zoom: 13,
@@ -53,7 +57,13 @@ export class GuessPage implements OnInit {
           this.isLoading = false;
         }
       )
-    });
+    });/*
+    this.geolocation.getCurrentPosition().then((position: Geoposition) => {
+      this.coords = position.coords;
+     console.log(`User is at ${this.coords.longitude}, ${this.coords.latitude}`);
+   }).catch(err => {
+     console.warn(`Could not retrieve user position because: ${err.message}`);
+   });*/
   }
 
   onMapReady(map: Map) {

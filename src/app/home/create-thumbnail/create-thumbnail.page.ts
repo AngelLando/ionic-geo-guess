@@ -5,6 +5,12 @@ import { PictureService } from '../../services/picture/picture.service';
 import { Geoposition } from '@ionic-native/geolocation/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Coords } from 'leaflet';
+import { Thumbnail } from 'src/app/models/thumbnail';
+import { ThumbnailsService } from 'src/app/services/thumbnails.service';
+import { User } from 'src/app/models/user';
+import { NgForm } from '@angular/forms';
+import { AuthService } from '../../auth/auth.service';
+
 
 
 @Component({
@@ -13,6 +19,8 @@ import { Coords } from 'leaflet';
   styleUrls: ['./create-thumbnail.page.scss'],
 })
 export class CreateThumbnailPage implements OnInit {
+  thumbnails: Thumbnail[];
+  user: User;
   pictureData: string;
   coords:Coordinates;
   picture:QimgImage;
@@ -20,7 +28,7 @@ export class CreateThumbnailPage implements OnInit {
   takePicture() {
     this.pictureService.takeAndUploadPicture().subscribe(picture => {
       this.picture = picture;
-      console.log(picture);
+  
       
     }, err => {
       console.warn('Could not take picture', err);
@@ -28,10 +36,13 @@ export class CreateThumbnailPage implements OnInit {
   }
 
   constructor(
+    private auth: AuthService,
+    private thumbnailsService:ThumbnailsService,
     private camera: Camera,
     private geolocation: Geolocation,
     private pictureService:PictureService
     ) { 
+      this.thumbnails=[];
 
     }
 
@@ -42,6 +53,28 @@ export class CreateThumbnailPage implements OnInit {
    }).catch(err => {
      console.warn(`Could not retrieve user position because: ${err.message}`);
    });
+  }
+
+
+  onSubmit(form: NgForm) {
+
+    // Do not do anything if the form is invalid.
+    if (form.invalid) {
+      return;
+    }
+//get form values
+
+this.auth.getUser().subscribe(user => {
+  this.user = user;
+});
+const data = {
+  "title": form.value.title,
+  "user_id": this.user._id,
+  "location": {"type": "Point", "coordinates": [this.coords.longitude, this.coords.latitude ]},
+  "img":"https://files.newsnetz.ch/story/1/1/5/11540743/10/topelement.jpg"
+}
+console.log("debug")
+this.thumbnailsService.postThumbnail(data);
   }
 
 }

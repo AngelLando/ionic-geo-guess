@@ -51,4 +51,11 @@ export class ThumbnailsService {
     return this.http.patch(this.url + `/${thumbnailId}`, data);
   }
 
+  postThumbnail(thumbnailData){
+    console.log(thumbnailData);
+    this.http.post<Thumbnail>(this.url, thumbnailData).subscribe(data=>{
+      console.log("debug")
+    });
+  }
+
 }

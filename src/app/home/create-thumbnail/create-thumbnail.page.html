@@ -6,12 +6,12 @@
 
 <ion-content class="ion-padding">
     <!-- ... -->
-    <form onsubmit="processForm(event)">
+    <form #createThumbnailForm="ngForm" (submit)="onSubmit(createThumbnailForm)">
      <ion-button (click)="takePicture()">Take pictures</ion-button> 
     <img *ngIf="picture" src="{{picture.url}}" />
     <ion-item>
       <ion-label position="floating">Title</ion-label>
-      <ion-input required type="text"></ion-input>
+      <ion-input name="title" ngModel required type="text"></ion-input>
     </ion-item>
  
     <div class="ion-padding">
