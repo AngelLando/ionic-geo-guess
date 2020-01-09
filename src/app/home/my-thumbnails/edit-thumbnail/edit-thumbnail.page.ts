@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ThumbnailsService } from 'src/app/services/thumbnails.service';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 
 import { Thumbnail } from 'src/app/models/thumbnail';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -23,7 +23,8 @@ export class EditThumbnailPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private thumbnailsService: ThumbnailsService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private alertCtrl: AlertController
     ) {}
 
   ngOnInit() {
@@ -46,6 +47,16 @@ export class EditThumbnailPage implements OnInit {
             })
           });
           this.isLoading = false;
+        }, error => {
+          this.alertCtrl.create({
+            header: 'An error occured!',
+            message: 'Thumbnail could not be fetched. Please try again later.',
+            buttons: [{text: 'Okay', handler: () => {
+              this.navCtrl.navigateBack('/home/my-thumbnails');
+            }}]
+          }).then(alertEl => {
+            alertEl.present();
+          })
         }
       )
     });
