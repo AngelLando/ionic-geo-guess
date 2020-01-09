@@ -16,7 +16,7 @@
     <div>
       <ion-card *ngFor="let thumbnail of thumbnails">
         <div class ="container">
-          <img class="thumbnail_img"  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
+          <img class="thumbnail_img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
           <ion-card-content class="overtext">Il y a 200 jours</ion-card-content>
         </div>
         <ion-card-header>
@@ -31,7 +31,7 @@
               </ion-fab-button>
             </ion-col>
             <ion-col size="2">
-                <ion-fab-button size="small" href="#" class="ion-float-right">
+                <ion-fab-button size="small" href="#" class="ion-float-right" [routerLink]="['/', 'home', 'my-thumbnails', 'edit', thumbnail._id]">
                   <ion-icon size="small" name="create"></ion-icon>
                 </ion-fab-button>
               </ion-col>

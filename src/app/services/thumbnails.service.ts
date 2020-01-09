@@ -2,21 +2,34 @@ import { Injectable } from '@angular/core';
 import { Thumbnail } from 'src/app/models/thumbnail';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { User } from '../models/user';
+import { Observable, BehaviorSubject } from 'rxjs';
+
+interface ThumbnailData {
+  _id: string;
+  title: string;
+  img: string;
+  created_at: string;
+  location: number;
+  user_id: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class ThumbnailsService {
 
-  private thumbnails: Thumbnail[];
+  private _thumbnails = new BehaviorSubject<Thumbnail[]>([]);
   private user: User;
   readonly url = `${environment.apiUrl}/thumbnails`;
 
+  get thumbnails() {
+    return this._thumbnails.asObservable();
+  }
+
   constructor(public http: HttpClient, private auth: AuthService) {
-    this.thumbnails = [];
   }
 
   fetchThumbnails() {
@@ -24,24 +37,21 @@ export class ThumbnailsService {
   }
 
   fetchMyThumbnails() {
-  /*  this.auth.getUser().subscribe(user => {
+    this.auth.getUser().subscribe(user => {
       this.user = user;
-    }); */
+    });
     return this.http
     .get<Thumbnail[]>(this.url)
-    .pipe(map(res => {
-      // return res.filter(thumbnails => thumbnails.user_id == this.user._id);
-      return res.filter(thumbnails => thumbnails.user_id == '5dbaec66b6c35e0017c82115');
+    .pipe(map(res => {      
+      return res.filter(thumbnails => thumbnails.user_id == this.user._id);
     }));
   }
 
   getThumbnail(thumbnailId: string) {
-    return {
-      ...this.thumbnails.find(thumbnail => {
-        return thumbnail._id === thumbnailId;
-      })
-    };
+    return this.http
+    .get<Thumbnail>(this.url + `/${thumbnailId}`);
   }
+
 
   postThumbnail(thumbnailData){
     console.log(thumbnailData);
@@ -49,5 +59,6 @@ export class ThumbnailsService {
       console.log("debug")
     });
   }
+
 
 }

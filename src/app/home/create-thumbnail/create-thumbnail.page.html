@@ -8,7 +8,7 @@
     <!-- ... -->
     <form #createThumbnailForm="ngForm" (submit)="onSubmit(createThumbnailForm)">
      <ion-button (click)="takePicture()">Take pictures</ion-button> 
-    <img *ngIf="pictureData" src="{{picture.url}}" />
+    <img *ngIf="picture" src="{{picture.url}}" />
     <ion-item>
       <ion-label position="floating">Title</ion-label>
       <ion-input name="title" ngModel required type="text"></ion-input>
