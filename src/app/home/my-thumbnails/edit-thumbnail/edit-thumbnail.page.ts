@@ -60,7 +60,7 @@ export class EditThumbnailPage implements OnInit {
     )
     .subscribe(() => {
       this.form.reset();
-      this.navCtrl.navigateBack(['/home/my-thumbnails']);
+      this.navCtrl.navigateBack('/home/my-thumbnails');
     });
   }
 
