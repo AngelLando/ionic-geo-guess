@@ -8,7 +8,7 @@
     <!-- ... -->
     <form onsubmit="processForm(event)">
      <ion-button (click)="takePicture()">Take pictures</ion-button> 
-    <img *ngIf="pictureData" src="{{picture.url}}" />
+    <img *ngIf="picture" src="{{picture.url}}" />
     <ion-item>
       <ion-label position="floating">Title</ion-label>
       <ion-input required type="text"></ion-input>
