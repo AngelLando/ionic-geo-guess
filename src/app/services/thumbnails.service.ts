@@ -43,12 +43,8 @@ export class ThumbnailsService {
     .get<Thumbnail>(this.url + `/${thumbnailId}`);
   }
 
-  updateThumbnail(thumbnailId: string, title: string) {
-    const data = {
-      "_id": thumbnailId,
-      "title": title
-    }
-    return this.http.patch(this.url + `/${thumbnailId}`, data);
+  updateThumbnail(thumbnailData) {
+    return this.http.patch(this.url + `/${thumbnailData._id}`, thumbnailData);
   }
 
   postThumbnail(thumbnailData){
