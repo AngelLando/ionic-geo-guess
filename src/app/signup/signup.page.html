@@ -34,7 +34,10 @@
     <div class="ion-padding">
   
       <!-- Submit button -->
-      <ion-button class="test" type="submit" expand="block" >Sign up</ion-button>
+      <ion-button class="test" type="submit" expand="block">
+        <ion-spinner color="light" name="dots" *ngIf="isLoading"></ion-spinner>
+        <span *ngIf="!isLoading">Sign up</span>
+      </ion-button>
   
     </div>
   </form>

@@ -11,6 +11,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SignupPage implements OnInit {
   users: User[];
+  isLoading = false;
+
   constructor(
     public http: HttpClient,
   ) { 
@@ -26,11 +28,14 @@ export class SignupPage implements OnInit {
       return;
     }
 
+    this.isLoading = true;
+
     // Hide any previous login error.
     //this.loginError = false;
     const url = `${environment.apiUrl}/users`;
     this.http.get<User[]>(url).subscribe(users => {
-    this.users=users;
+      this.users = users;
+      this.isLoading = false;
       console.log(`Users loaded`, users);
     });
   }
