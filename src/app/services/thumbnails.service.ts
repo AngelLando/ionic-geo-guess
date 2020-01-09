@@ -52,23 +52,13 @@ export class ThumbnailsService {
     .get<Thumbnail>(this.url + `/${thumbnailId}`);
   }
 
-/*   getUniqueThumbnail(id: string) {
-    return this.http
-      .get<ThumbnailData>(
-        this.url + `/thumbnails/${id}`
-      )
-      .pipe(
-        map(thumbnailData => {
-          return new Thumbnail(
-            thumbnailData._id,
-            thumbnailData.title,
-            thumbnailData.description,
-            thumbnailData.imageUrl,
-            thumbnailData.price,
-            thumbnailData.userId
-          );
-        })
-      );
-  } */
+
+  postThumbnail(thumbnailData){
+    console.log(thumbnailData);
+    this.http.post<Thumbnail>(this.url, thumbnailData).subscribe(data=>{
+      console.log("debug")
+    });
+  }
+
 
 }
