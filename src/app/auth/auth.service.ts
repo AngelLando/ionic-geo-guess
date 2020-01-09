@@ -43,7 +43,6 @@ export class AuthService {
   logIn(authRequest: AuthRequest): Observable<User> {
 
     const authUrl = `${environment.apiUrl}/users/login`;
-   /* const authUrl = 'https://comem-archioweb-2019-2020-g.herokuapp.com/users/login';*/
     return this.http.post<AuthResponse>(authUrl, authRequest).pipe(
       delayWhen(auth => {
         return this.saveAuth(auth);
@@ -60,6 +59,11 @@ export class AuthService {
     this.authSource.next(null);
     this.storage.remove('auth');
     console.log('User logged out');
+  }
+
+  signUp(username: string, password: string) {
+    const signUpUrl = `${environment.apiUrl}/users`;
+    return this.http.post(signUpUrl, {username: username, password: password});
   }
 
   private saveAuth(auth: AuthResponse): Observable<void> {

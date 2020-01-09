@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { User } from 'src/app/models/user';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../auth/auth.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-signup',
@@ -15,28 +17,34 @@ export class SignupPage implements OnInit {
 
   constructor(
     public http: HttpClient,
+    private auth: AuthService,
+    private navCtrl: NavController
   ) { 
     this.users = [];
   }
 
   ngOnInit() {
   }
+
   onSubmit(form: NgForm) {
 
-    // Do not do anything if the form is invalid.
     if (form.invalid) {
       return;
     }
 
-    this.isLoading = true;
+    const username = form.value.username;
+    const password = form.value.password;    
 
-    // Hide any previous login error.
-    //this.loginError = false;
-    const url = `${environment.apiUrl}/users`;
-    this.http.get<User[]>(url).subscribe(users => {
-      this.users = users;
-      this.isLoading = false;
-      console.log(`Users loaded`, users);
+    this.isLoading = true;
+    
+    this.auth.signUp(username, password).subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.navCtrl.navigateBack('/home/all-thumbnails');
+      },
+      error: err => {
+        console.warn(`Authentication failed: ${err.message}`);
+      }
     });
   }
 }
