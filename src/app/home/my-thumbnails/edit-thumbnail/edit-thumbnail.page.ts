@@ -53,7 +53,15 @@ export class EditThumbnailPage implements OnInit {
   onUpdateThumbnail() {
     if(!this.form.valid) {
       return;
-    }    
+    }
+    this.thumbnailsService.updateThumbnail(
+      this.thumbnail._id,
+      this.form.value.title
+    )
+    .subscribe(() => {
+      this.form.reset();
+      this.navCtrl.navigateBack(['/home/my-thumbnails']);
+    });
   }
 
 }
