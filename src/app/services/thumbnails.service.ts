@@ -2,19 +2,10 @@ import { Injectable } from '@angular/core';
 import { Thumbnail } from 'src/app/models/thumbnail';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, take, switchMap } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { User } from '../models/user';
 import { Observable, BehaviorSubject } from 'rxjs';
-
-interface ThumbnailData {
-  _id: string;
-  title: string;
-  img: string;
-  created_at: string;
-  location: number;
-  user_id: string;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +43,13 @@ export class ThumbnailsService {
     .get<Thumbnail>(this.url + `/${thumbnailId}`);
   }
 
+  updateThumbnail(thumbnailId: string, title: string) {
+    const data = {
+      "_id": thumbnailId,
+      "title": title
+    }
+    return this.http.patch(this.url + `/${thumbnailId}`, data);
+  }
 
   postThumbnail(thumbnailData){
     console.log(thumbnailData);
@@ -59,6 +57,5 @@ export class ThumbnailsService {
       console.log("debug")
     });
   }
-
 
 }
