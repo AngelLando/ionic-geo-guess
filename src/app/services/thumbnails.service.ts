@@ -54,4 +54,8 @@ export class ThumbnailsService {
     });
   }
 
+  deleteThumbnail(thumbnailId: string) {    
+    return this.http.delete(this.url + `/${thumbnailId}`);
+  }
+
 }

@@ -51,9 +51,11 @@ export class EditThumbnailPage implements OnInit {
           this.alertCtrl.create({
             header: 'An error occured!',
             message: 'Thumbnail could not be fetched. Please try again later.',
-            buttons: [{text: 'Okay', handler: () => {
-              this.navCtrl.navigateBack('/home/my-thumbnails');
-            }}]
+            buttons: [{
+              text: 'Okay', handler: () => {
+                this.navCtrl.navigateBack('/home/my-thumbnails');
+              }
+            }]
           }).then(alertEl => {
             alertEl.present();
           })

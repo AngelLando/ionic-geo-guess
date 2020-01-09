@@ -3,6 +3,7 @@ import { Thumbnail } from 'src/app/models/thumbnail';
 import { ThumbnailsService } from 'src/app/services/thumbnails.service';
 import { User } from 'src/app/models/user';
 import { Subscription } from 'rxjs';
+import { LoadingController, AlertController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-my-thumbnails',
@@ -17,7 +18,11 @@ export class MyThumbnailsPage implements OnInit, OnDestroy {
   user: User;
   contentLoaded = false;
   
-  constructor(private thumbnailsService: ThumbnailsService) {
+  constructor(
+    private thumbnailsService: ThumbnailsService,
+    private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController,
+    private navCtrl: NavController) {
     this.thumbnails = [];
   }
 
@@ -32,6 +37,32 @@ export class MyThumbnailsPage implements OnInit, OnDestroy {
       this.thumbnails = thumbnails;
       this.contentLoaded = true;
     });
+  }
+
+  onDeleteThumbnail(thumbnailId: string) {
+    this.alertCtrl.create({
+      header: 'Confirm deletion',
+      message: 'Are you sure you want to permanently delete this thumbnail?',
+      buttons: [{
+        text: 'Cancel', handler: () => {
+          this.navCtrl.navigateBack('/home/my-thumbnails');
+        }
+      },
+      {
+        text: 'Delete', handler: () => {
+          this.loadingCtrl.create({
+            message: 'Deleting...'
+          }).then(loadingEl => {
+            loadingEl.present();
+            this.thumbnailsService.deleteThumbnail(thumbnailId).subscribe(() => {
+              loadingEl.dismiss();
+            });
+          })
+        }
+      }]
+    }).then(alertEl => {
+      alertEl.present();
+    })
   }
 
   doRefresh(ev: any) {
