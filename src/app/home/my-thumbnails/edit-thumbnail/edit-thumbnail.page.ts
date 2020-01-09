@@ -17,6 +17,7 @@ export class EditThumbnailPage implements OnInit {
   thumbnailId: string;
   form: FormGroup;
   isLoading = false;
+  isUpdating = false;
   private thumbnailSub: Subscription;
 
   constructor(
@@ -54,11 +55,13 @@ export class EditThumbnailPage implements OnInit {
     if(!this.form.valid) {
       return;
     }
+    this.isUpdating = true;
     const data = {
       "_id": this.thumbnail._id,
       "title": this.form.value.title
     }
     this.thumbnailsService.updateThumbnail(data).subscribe(() => {
+      this.isUpdating = false;
       this.form.reset();
       this.navCtrl.navigateBack('/home/my-thumbnails');
     });

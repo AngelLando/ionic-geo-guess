@@ -6,7 +6,8 @@
     <ion-title>Edit thumbnail</ion-title>
     <ion-buttons slot="primary">
         <ion-button (click)="onUpdateThumbnail()" [disabled]="!form?.valid">
-          <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+          <ion-spinner color="light" *ngIf="isUpdating"></ion-spinner>
+          <ion-icon name="checkmark" slot="icon-only" *ngIf="!isUpdating"></ion-icon>
         </ion-button>
       </ion-buttons>
   </ion-toolbar>
