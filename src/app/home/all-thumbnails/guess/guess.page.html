@@ -1,19 +1,25 @@
 <ion-header>
   <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home/all-thumbnails"></ion-back-button>
+    </ion-buttons>
     <ion-title>Make a guess</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
-  <div class="container">
+  <div *ngIf="isLoading" text-center>
+    <br>
+    <ion-spinner color="primary"></ion-spinner>
+  </div>
+  <div class="container" *ngIf="!isLoading">
     <div class="leaflet-map" leaflet [leafletOptions]="mapOptions" (leafletMapReady)="onMapReady($event)"></div>
     <ion-grid class="over" style="width: 50%">
       <ion-card class="thumbnail">
         <ion-card-header>
           <ion-row (click)="toggleClass()">
             <ion-col size="9" class="title">
-              <ion-card-subtitle>Un titre</ion-card-subtitle>
+              <ion-card-subtitle>{{ thumbnail.title }}</ion-card-subtitle>
             </ion-col>
             <ion-col size="3">
               <ion-icon [name]="buttonIcon"></ion-icon>
