@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { latLng, MapOptions, tileLayer, Map } from 'leaflet';
 import { Thumbnail } from 'src/app/models/thumbnail';
+import { ThumbnailsService } from 'src/app/services/thumbnails.service';
+import { NavController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-guess',
@@ -9,9 +13,17 @@ import { Thumbnail } from 'src/app/models/thumbnail';
 })
 
 export class GuessPage implements OnInit {
-
+  thumbnail: Thumbnail;
+  guessId: string;
+  isLoading = false;
+  private thumbnailSub: Subscription;
   mapOptions: MapOptions;
-  constructor() {
+  
+  constructor(
+    private route: ActivatedRoute,
+    private thumbnailsService: ThumbnailsService,
+    private navCtrl: NavController
+  ) {
 
     this.mapOptions = {
       layers: [
@@ -26,6 +38,22 @@ export class GuessPage implements OnInit {
   }
 
   ngOnInit() {
+    this.route.paramMap.subscribe(paramMap => {
+      if(!paramMap.has('guessId')) {
+        this.navCtrl.navigateBack('/home/all-thumbnails');
+        return;
+      }
+      this.guessId = paramMap.get('guessId');
+      this.isLoading = true;
+      this.thumbnailSub = this.thumbnailsService
+      .getThumbnail(paramMap.get('guessId'))
+      .subscribe(
+        thumbnail => {
+          this.thumbnail = thumbnail;
+          this.isLoading = false;
+        }
+      )
+    });
   }
 
   onMapReady(map: Map) {
