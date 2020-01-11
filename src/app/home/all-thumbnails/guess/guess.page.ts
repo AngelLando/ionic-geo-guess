@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { latLng, MapOptions, tileLayer, Map } from 'leaflet';
+import * as L from 'leaflet';
+import { latLng, MapOptions, marker, Marker, tileLayer, Map, LatLng } from 'leaflet';
 import { Thumbnail } from 'src/app/models/thumbnail';
 import { ThumbnailsService } from 'src/app/services/thumbnails.service';
 import { NavController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 /*import { Geoposition } from '@ionic-native/geolocation/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';*/
+import { defaultIcon } from 'src/app/models/marker';
 
 @Component({
   selector: 'app-guess',
@@ -17,6 +19,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';*/
 export class GuessPage implements OnInit {
   thumbnail: Thumbnail;
   guessId: string;
+  mapMarkers: Marker[];
   /*coords:Coordinates;*/
   isLoading = false;
   private thumbnailSub: Subscription;
@@ -28,17 +31,21 @@ export class GuessPage implements OnInit {
     private navCtrl: NavController,
     /*private geolocation: Geolocation */
     ) {
-
     this.mapOptions = {
       layers: [
         tileLayer(
           'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          { maxZoom: 3 }
+          { maxZoom: 30 }
         )
       ],
       zoom: 13,
       center: latLng(46.778186, 6.641524)
-    };
+    };/*
+    this.mapMarkers = [
+      marker([ 46.778186, 6.641524 ], { icon: defaultIcon }),
+      marker([ 46.780796, 6.647395 ], { icon: defaultIcon }),
+      marker([ 46.784992, 6.652267 ], { icon: defaultIcon })
+    ];*/
   }
 
   ngOnInit() {
@@ -68,6 +75,17 @@ export class GuessPage implements OnInit {
 
   onMapReady(map: Map) {
     setTimeout(() => map.invalidateSize(), 0);
+
+    var popup = L.popup();
+
+    function onMapClick(e) {
+      popup
+      .setLatLng(e.latlng)
+      .setContent("You clicked the map at " + e.latlng.toString())
+      .openOn(map);
+    }
+  
+    map.on('click', onMapClick);
   }
 
   public myClass = 'show';
