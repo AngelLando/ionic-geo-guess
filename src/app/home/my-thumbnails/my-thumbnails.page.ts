@@ -35,6 +35,7 @@ export class MyThumbnailsPage implements OnInit, OnDestroy {
   ionViewWillEnter() {
     this.thumbnailsService.fetchMyThumbnails().subscribe(thumbnails => {
       this.thumbnails = thumbnails;
+      this.thumbnails.sort((a, b) => +new Date(b.created_at) - +new Date(a.created_at));
       this.contentLoaded = true;
     });
   }
