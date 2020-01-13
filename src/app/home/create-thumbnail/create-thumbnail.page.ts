@@ -23,11 +23,16 @@ import { NavController, AlertController } from '@ionic/angular';
   styleUrls: ['./create-thumbnail.page.scss'],
 })
 export class CreateThumbnailPage implements OnInit {
+  
   thumbnails: Thumbnail[];
   user: User;
   pictureData: string;
   coords:Coordinates;
   picture:QimgImage;
+  loginError: boolean;
+  isLoading=false;
+  imgNotSet=false;
+
   //take picture
   takePicture() {
     
@@ -68,27 +73,37 @@ export class CreateThumbnailPage implements OnInit {
     if (form.invalid) {
       return;
     }
-//get form values
+    this.isLoading = true;
 
+
+    if(this.picture==null){
+      this.isLoading=false;
+      this.imgNotSet=true;
+      return;
+    }
+
+   // Get user connected
 this.auth.getUser().subscribe(user => {
   this.user = user;
-});
+})
+
+//get data
 const data = {
   "title": form.value.title,
   "user_id": this.user._id,
   "location": {"type": "Point", "coordinates": [this.coords.longitude, this.coords.latitude ]},
   "img":this.picture.url
 }
-try {
-  this.thumbnailsService.postThumbnail(data)
-}
-catch(error) {
-  console.error(error);
-  // expected output: ReferenceError: nonExistentFunction is not defined
-  // Note - error messages will vary depending on browser
-}
-this.navCtrl.navigateBack('/home/my-thumbnails');
 
+ this.thumbnailsService.postThumbnail(data).subscribe({
+  next: () => {
+    this.isLoading = false;
+    this.navCtrl.navigateBack('/home/my-thumbnails');
+  },
+  error: err => {
+    this.loginError = true;
+    console.warn(`Posted Thumbnail failed: ${err.message}`);
   }
-
+  })
+  }
 }

@@ -10,17 +10,35 @@
 <ion-content class="ion-padding">
     <!-- ... -->
     <form #createThumbnailForm="ngForm" (submit)="onSubmit(createThumbnailForm)">
-     <ion-button (click)="takePicture()">Take pictures</ion-button> 
-    <img *ngIf="picture" src="{{picture.url}}" />
+               <!-- img input -->
+               
+      <ion-button (click)="takePicture()">Take pictures</ion-button> 
+ <img *ngIf="picture" src="{{picture.url}}" />
+ <ion-item lines="none" *ngIf="imgNotSet">
+  <ion-text color='danger'>Image is required.</ion-text>
+</ion-item>
+   
+          <!-- Title input -->
     <ion-item>
       <ion-label position="floating">Title</ion-label>
-      <ion-input name="title" ngModel required type="text"></ion-input>
+      <ion-input name="title" ngModel required type="text" #title="ngModel" ></ion-input>
     </ion-item>
- 
+         <!-- Error message displayed if the title is invalid -->
+         <ion-item lines="none" *ngIf="title.invalid && title.touched">
+          <ion-text color='danger'>Title is required.</ion-text>
+        </ion-item>
+    
+  <!-- Submit button -->
     <div class="ion-padding">
-      <ion-button expand="block" type="submit" class="ion-no-margin">Submit thumbnail</ion-button>
+      <ion-button expand="block" type="submit" [disabled]="createThumbnailForm.invalid" class="ion-no-margin">
+      <ion-spinner color="light" name="dots" *ngIf="isLoading"></ion-spinner>
+      <span *ngIf="!isLoading">Submit Thumbnail</span>
+    </ion-button>
     </div>
 
+    <!-- Error message displayed if the login failed -->
+    <ion-text color='danger' *ngIf="loginError">Form is invalid.</ion-text>
+    
   </form>
 </ion-content>
 
