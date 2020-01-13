@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Thumbnail } from 'src/app/models/thumbnail';
 import { ThumbnailsService } from 'src/app/services/thumbnails.service';
 import { User } from 'src/app/models/user';
-import { Subscription } from 'rxjs';
 import { LoadingController, AlertController, NavController } from '@ionic/angular';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-my-thumbnails',
@@ -11,10 +11,9 @@ import { LoadingController, AlertController, NavController } from '@ionic/angula
   styleUrls: ['./my-thumbnails.page.scss'],
 })
 
-export class MyThumbnailsPage implements OnInit, OnDestroy {
+export class MyThumbnailsPage implements OnInit {
 
   thumbnails: Thumbnail[];
-  private thumbnailSub: Subscription;
   user: User;
   contentLoaded = false;
   
@@ -22,14 +21,15 @@ export class MyThumbnailsPage implements OnInit, OnDestroy {
     private thumbnailsService: ThumbnailsService,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
-    private navCtrl: NavController) {
+    private navCtrl: NavController,
+    private auth: AuthService) {
     this.thumbnails = [];
   }
 
   ngOnInit() {
-    this.thumbnailSub = this.thumbnailsService.thumbnails.subscribe(thumbnails => {
-      this.thumbnails = thumbnails;
-    })
+    this.auth.getUser().subscribe(user => {
+      this.user = user;
+    });
   }
 
   ionViewWillEnter() {
@@ -73,12 +73,6 @@ export class MyThumbnailsPage implements OnInit, OnDestroy {
     setTimeout(() => {
       ev.target.complete();
     }, 500);
-  }
-
-  ngOnDestroy() {
-    if(this.thumbnailSub) {
-      this.thumbnailSub.unsubscribe();
-    }
   }
 
 }

@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Thumbnail } from 'src/app/models/thumbnail';
 import { ThumbnailsService } from 'src/app/services/thumbnails.service';
 import { User } from 'src/app/models/user';
-import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-all-thumbnails',
@@ -10,20 +10,21 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./all-thumbnails.page.scss'],
 })
 
-export class AllThumbnailsPage implements OnInit, OnDestroy {
+export class AllThumbnailsPage implements OnInit {
 
   thumbnails: Thumbnail[];
-  private thumbnailSub: Subscription;
   user: User;
   contentLoaded = false;
 
-  constructor(private thumbnailsService: ThumbnailsService) {
-  }
+  constructor(
+    private thumbnailsService: ThumbnailsService,
+    private auth: AuthService
+    ) { }
 
   ngOnInit() {
-    this.thumbnailSub = this.thumbnailsService.thumbnails.subscribe(thumbnails => {
-      this.thumbnails = thumbnails;
-    })
+    this.auth.getUser().subscribe(user => {
+      this.user = user;
+    });
   }
 
   ionViewWillEnter() {
@@ -34,13 +35,6 @@ export class AllThumbnailsPage implements OnInit, OnDestroy {
     });
   }
 
-/*   ionViewDidLoad() {
-    const url = 'https://comem-archioweb-2019-2020-g.herokuapp.com/thumbnails';
-    this.http.get(url).subscribe(thumbnails => {
-      console.log(`Thumbnails loaded`, thumbnails);
-    });
-  } */
-
   doRefresh(ev: any) {
     this.ionViewWillEnter();
 
@@ -49,9 +43,4 @@ export class AllThumbnailsPage implements OnInit, OnDestroy {
     }, 500);
   }
 
-  ngOnDestroy() {
-    if(this.thumbnailSub) {
-      this.thumbnailSub.unsubscribe();
-    }
-  }
 }
