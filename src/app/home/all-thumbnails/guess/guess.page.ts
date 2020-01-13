@@ -97,21 +97,53 @@ export class GuessPage implements OnInit {
       this.user = user;
     });
 
-    console.log(this.thumbnail.location.coordinates[0]);
-    //var score = this.thumbnail.location.coordinates[];
+    // calculates the distance between the two points (the one of the guess and the one of the thumbnail), in KM
+    var lat1 = this.latitude;
+    var lon1 = this.longitude;
+    var lat2 = this.thumbnail.location.coordinates[1];
+    var lon2 = this.thumbnail.location.coordinates[0];
+    var d = 0;
 
+    if ((lat1 !== lat2) && (lon1 !== lon2)) {
+      var radlat1 = Math.PI * lat1/180;
+      var radlat2 = Math.PI * lat2/180;
+      var theta = lon1-lon2;
+      var radtheta = Math.PI * theta/180;
+      var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+      if (dist > 1) {
+        dist = 1;
+      }
+      dist = Math.acos(dist);
+      dist = dist * 180/Math.PI;
+      dist = dist * 60 * 1.1515;
+      var d = dist * 1.609344;
+    }
+
+    console.log(d);
+
+    var score = 0;
+
+    if(d < 10 ) {
+      score = 100;
+    } else if (d < 100) {
+      score = 60;
+    } else if (d < 1000) {
+      score = 10;
+    };
+
+    console.log(score);
     console.log(this.latitude);
     console.log(this.longitude);
-
+/*
     const data = {
       "thumbnail_id": this.thumbnail._id,
       "user_id": this.user._id,
-      "score": 35,
+      "score": score,
       "location": {"type": "Point", "coordinates": [this.longitude, this.latitude ]}
     }
 
     console.log("debug");
-    this.guessesService.postGuess(data);
+    this.guessesService.postGuess(data);*/
   }
 
 

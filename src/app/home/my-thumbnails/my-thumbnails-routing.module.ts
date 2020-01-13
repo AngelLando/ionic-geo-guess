@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'edit/:thumbnailId',
     loadChildren: () => import('./edit-thumbnail/edit-thumbnail.module').then( m => m.EditThumbnailPageModule)
+  },
+  {
+    path: ':thumbnailId/guesses',
+    loadChildren: () => import('./guesses/guesses.module').then( m => m.GuessesPageModule)
   }
 ];
 
