@@ -22,9 +22,6 @@ export class AllThumbnailsPage implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.auth.getUser().subscribe(user => {
-      this.user = user;
-    });
   }
 
   ionViewWillEnter() {
