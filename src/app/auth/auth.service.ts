@@ -61,9 +61,9 @@ export class AuthService {
     console.log('User logged out');
   }
 
-  signUp(username: string, password: string) {
+  signUp(username: string, password: string, country:string, city:string) {
     const signUpUrl = `${environment.apiUrl}/users`;
-    return this.http.post(signUpUrl, {username, password});
+    return this.http.post(signUpUrl, {username, password,country,city});
   }
 
   private saveAuth(auth: AuthResponse): Observable<void> {

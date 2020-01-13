@@ -17,6 +17,25 @@
         <ion-label position="floating">Password</ion-label>
         <ion-input inputmode="text" required="true" type="password" name="password" ngModel></ion-input>
       </ion-item>
+
+      <!-- country input -->
+      <ion-item>
+        <ion-label position="floating">Country</ion-label>
+        <ion-select  interface="popover"  required="true" name="country" ngModel>
+          <ion-select-option value="Switzerland">Switzerland</ion-select-option>
+          <ion-select-option value="France">France</ion-select-option>
+          <ion-select-option value="Belgium">Belgium</ion-select-option>
+          <ion-select-option value="Germany">Germany</ion-select-option>
+          <ion-select-option value="Togo">Togo</ion-select-option>
+          <ion-select-option value="Canada">Canada</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- city input -->
+      <ion-item>
+        <ion-label position="floating">City</ion-label>
+        <ion-input inputmode="text" required="true" name="city" ngModel></ion-input>
+      </ion-item>
     </ion-list>
     <div class="ion-padding">
       <!-- Submit button -->

@@ -34,10 +34,13 @@ export class SignupPage implements OnInit {
 
     const username = form.value.username;
     const password = form.value.password;    
+    const country= form.value.country;
+    const city=form.value.city;
+    console.log(country);
 
     this.isLoading = true;
     
-    this.auth.signUp(username, password).subscribe({
+    this.auth.signUp(username, password,country,city).subscribe({
       next: () => {
         this.isLoading = false;
         this.navCtrl.navigateBack('/home/all-thumbnails');
