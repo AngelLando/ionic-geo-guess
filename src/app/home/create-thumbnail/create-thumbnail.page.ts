@@ -10,6 +10,8 @@ import { ThumbnailsService } from 'src/app/services/thumbnails.service';
 import { User } from 'src/app/models/user';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../auth/auth.service';
+import { NavController, AlertController } from '@ionic/angular';
+
 
 
 
@@ -23,7 +25,6 @@ import { AuthService } from '../../auth/auth.service';
 export class CreateThumbnailPage implements OnInit {
   thumbnails: Thumbnail[];
   user: User;
-  message:string;
   pictureData: string;
   coords:Coordinates;
   picture:QimgImage;
@@ -45,6 +46,7 @@ export class CreateThumbnailPage implements OnInit {
   }
 
   constructor(
+    private navCtrl: NavController,
     private auth: AuthService,
     private thumbnailsService:ThumbnailsService,
     private camera: Camera,
@@ -84,12 +86,8 @@ catch(error) {
   console.error(error);
   // expected output: ReferenceError: nonExistentFunction is not defined
   // Note - error messages will vary depending on browser
-  if(!error){
-    this.message="Bien envoyé";
-    const controller = document.querySelector('ion-toast-controller');
-
-  }
 }
+this.navCtrl.navigateBack('/home/my-thumbnails');
 
   }
 
