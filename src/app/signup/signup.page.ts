@@ -8,12 +8,15 @@ import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-signup',
+  
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
 })
 export class SignupPage implements OnInit {
   users: User[];
   isLoading = false;
+  loginError: boolean;
+
 
   constructor(
     public http: HttpClient,
@@ -31,12 +34,12 @@ export class SignupPage implements OnInit {
     if (form.invalid) {
       return;
     }
+    this.loginError = false;
 
     const username = form.value.username;
     const password = form.value.password;    
     const country= form.value.country;
     const city=form.value.city;
-    console.log(country);
 
     this.isLoading = true;
     
@@ -47,6 +50,10 @@ export class SignupPage implements OnInit {
       },
       error: err => {
         console.warn(`Authentication failed: ${err.message}`);
+        this.loginError = true;
+        this.isLoading = false;
+
+
       }
     });
   }
