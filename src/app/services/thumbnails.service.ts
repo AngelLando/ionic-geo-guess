@@ -12,13 +12,8 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 export class ThumbnailsService {
 
-  private _thumbnails = new BehaviorSubject<Thumbnail[]>([]);
   private user: User;
   readonly url = `${environment.apiUrl}/thumbnails`;
-
-  get thumbnails() {
-    return this._thumbnails.asObservable();
-  }
 
   constructor(public http: HttpClient, private auth: AuthService) {
   }
