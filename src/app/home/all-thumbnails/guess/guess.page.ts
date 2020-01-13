@@ -4,10 +4,11 @@ import * as L from 'leaflet';
 import { latLng, MapOptions, marker, Marker, tileLayer, Map, LatLng } from 'leaflet';
 import { Thumbnail } from 'src/app/models/thumbnail';
 import { ThumbnailsService } from 'src/app/services/thumbnails.service';
+import { GuessesService } from 'src/app/services/guesses.service';
 import { NavController } from '@ionic/angular';
+import { User } from 'src/app/models/user';
 import { Subscription } from 'rxjs';
-/*import { Geoposition } from '@ionic-native/geolocation/ngx';
-import { Geolocation } from '@ionic-native/geolocation/ngx';*/
+import { AuthService } from '../../../auth/auth.service';
 import { defaultIcon } from 'src/app/models/marker';
 
 @Component({
@@ -20,16 +21,19 @@ export class GuessPage implements OnInit {
   thumbnail: Thumbnail;
   guessId: string;
   mapMarkers: Marker[];
-  /*coords:Coordinates;*/
+  latitude: number;
+  longitude: number;
+  user: User;
   isLoading = false;
   private thumbnailSub: Subscription;
   mapOptions: MapOptions;
   
   constructor(
+    private auth: AuthService,
     private route: ActivatedRoute,
+    private guessesService:GuessesService,
     private thumbnailsService: ThumbnailsService,
     private navCtrl: NavController,
-    /*private geolocation: Geolocation */
     ) {
     this.mapOptions = {
       layers: [
@@ -64,35 +68,63 @@ export class GuessPage implements OnInit {
           this.isLoading = false;
         }
       )
-    });/*
-    this.geolocation.getCurrentPosition().then((position: Geoposition) => {
-      this.coords = position.coords;
-     console.log(`User is at ${this.coords.longitude}, ${this.coords.latitude}`);
-   }).catch(err => {
-     console.warn(`Could not retrieve user position because: ${err.message}`);
-   });*/
+    });
   }
 
   onMapReady(map: Map) {
     setTimeout(() => map.invalidateSize(), 0);
-
     var popup = L.popup();
 
-    function onMapClick(e) {
+    map.on('click', (e: L.LeafletMouseEvent) => {
+      console.log(e);
       popup
       .setLatLng(e.latlng)
       .setContent("You clicked the map at " + e.latlng.toString())
       .openOn(map);
-    }
-  
-    map.on('click', onMapClick);
+
+      this.latitude = e.latlng.lat;
+      this.longitude = e.latlng.lng;
+
+      console.log(this.latitude);
+      console.log(this.longitude);      
+    });
   }
+
+
+  onValidate() {
+  //get values
+    this.auth.getUser().subscribe(user => {
+      this.user = user;
+    });
+
+    console.log(this.thumbnail.location.coordinates[0]);
+    //var score = this.thumbnail.location.coordinates[];
+
+    console.log(this.latitude);
+    console.log(this.longitude);
+
+    const data = {
+      "thumbnail_id": this.thumbnail._id,
+      "user_id": this.user._id,
+      "score": 35,
+      "location": {"type": "Point", "coordinates": [this.longitude, this.latitude ]}
+    }
+
+    console.log("debug");
+    this.guessesService.postGuess(data);
+  }
+
 
   public myClass = 'show';
   public iconRight = 'hide';
   public buttonIcon: string = "arrow-dropdown";
+  public availableIcon = "";
 
-  toggleClass(getIcon: string){
+  setButton() {
+    this.availableIcon = "checkmark";
+  }
+
+  toggleClass(){
     if (this.myClass=="show") {
       this.myClass='hide';
     } else {

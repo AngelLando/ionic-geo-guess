@@ -4,6 +4,9 @@
       <ion-back-button defaultHref="/home/all-thumbnails"></ion-back-button>
     </ion-buttons>
     <ion-title>Make a guess</ion-title>
+    <ion-buttons slot="end" (click)="onValidate()">
+      <ion-icon size="large" [name]="availableIcon"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -13,7 +16,7 @@
     <ion-spinner color="primary"></ion-spinner>
   </div>
   <div class="container" *ngIf="!isLoading">
-    <div class="leaflet-map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers" (leafletMapReady)="onMapReady($event)"></div>
+    <div class="leaflet-map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers" (leafletMapReady)="onMapReady($event)" (click)="setButton()"></div>
     <ion-grid class="over">
       <ion-card class="thumbnail">
         <ion-card-header>
