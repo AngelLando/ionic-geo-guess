@@ -10,18 +10,26 @@
       <!-- Username input -->
       <ion-item>
         <ion-label position="floating">Username</ion-label>
-        <ion-input inputmode="text" required="true" name="username" ngModel></ion-input>
+        <ion-input #username="ngModel" inputmode="text" required="true" name="username" ngModel></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" *ngIf="username.touched && username.invalid">
+        <ion-text color='danger'>Password is required.</ion-text>
       </ion-item>
       <!-- Password input -->
       <ion-item>
         <ion-label position="floating">Password</ion-label>
-        <ion-input inputmode="text" required="true" type="password" name="password" ngModel></ion-input>
+        <ion-input inputmode="text" required="true" type="password" #password="ngModel" name="password" ngModel></ion-input>
       </ion-item>
+         <!-- Error message displayed if the password is invalid -->
+         <ion-item lines="none" *ngIf="password.touched && password.invalid">
+          <ion-text color='danger'>Password is required.</ion-text>
+        </ion-item>
 
       <!-- country input -->
       <ion-item>
         <ion-label position="floating">Country</ion-label>
-        <ion-select  interface="popover"  required="true" name="country" ngModel>
+        <ion-select #country="ngModel" interface="popover"  required="true" name="country" ngModel>
           <ion-select-option value="Switzerland">Switzerland</ion-select-option>
           <ion-select-option value="France">France</ion-select-option>
           <ion-select-option value="Belgium">Belgium</ion-select-option>
@@ -34,8 +42,12 @@
       <!-- city input -->
       <ion-item>
         <ion-label position="floating">City</ion-label>
-        <ion-input inputmode="text" required="true" name="city" ngModel></ion-input>
+        <ion-input #city="ngModel" inputmode="text" required="true" name="city" ngModel></ion-input>
       </ion-item>
+             <!-- Error message displayed if the password is invalid -->
+             <ion-item lines="none" *ngIf="city.touched && city.invalid">
+              <ion-text color='danger'>Password is required.</ion-text>
+            </ion-item>
     </ion-list>
     <div class="ion-padding">
       <!-- Submit button -->
@@ -43,6 +55,8 @@
         <ion-spinner color="light" name="dots" *ngIf="isLoading"></ion-spinner>
         <span *ngIf="!isLoading">Sign up</span>
       </ion-button>
+         <!-- Error message displayed if the login failed -->
+         <ion-text color='danger' *ngIf="loginError">Username already exists.</ion-text>
     </div>
   </form>
   <p class="ion-text-center">Already have an account? <a href="login">Log in</a>.</p>
