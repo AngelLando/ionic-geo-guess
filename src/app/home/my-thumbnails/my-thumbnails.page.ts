@@ -56,6 +56,7 @@ export class MyThumbnailsPage implements OnInit, OnDestroy {
             loadingEl.present();
             this.thumbnailsService.deleteThumbnail(thumbnailId).subscribe(() => {
               loadingEl.dismiss();
+              this.thumbnails = this.thumbnails.filter(thumbnail => thumbnail._id !== thumbnailId);
             });
           })
         }
