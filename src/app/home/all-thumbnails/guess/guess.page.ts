@@ -134,7 +134,7 @@ export class GuessPage implements OnInit {
     console.log(score);
     console.log(this.latitude);
     console.log(this.longitude);
-/*
+
     const data = {
       "thumbnail_id": this.thumbnail._id,
       "user_id": this.user._id,
@@ -143,7 +143,7 @@ export class GuessPage implements OnInit {
     }
 
     console.log("debug");
-    this.guessesService.postGuess(data);*/
+    this.guessesService.postGuess(data);
   }
 
 
