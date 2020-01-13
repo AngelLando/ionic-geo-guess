@@ -13,6 +13,8 @@ import { AuthService } from '../../auth/auth.service';
 
 
 
+
+
 @Component({
   selector: 'app-create-thumbnail',
   templateUrl: './create-thumbnail.page.html',
@@ -21,15 +23,22 @@ import { AuthService } from '../../auth/auth.service';
 export class CreateThumbnailPage implements OnInit {
   thumbnails: Thumbnail[];
   user: User;
+  message:string;
   pictureData: string;
   coords:Coordinates;
   picture:QimgImage;
   //take picture
   takePicture() {
+    
     this.pictureService.takeAndUploadPicture().subscribe(picture => {
       this.picture = picture;
   
-      
+      this.geolocation.getCurrentPosition().then((position: Geoposition) => {
+        this.coords = position.coords;
+       console.log(`User is at ${this.coords.longitude}, ${this.coords.latitude}`);
+     }).catch(err => {
+       console.warn(`Could not retrieve user position because: ${err.message}`);
+     });
     }, err => {
       console.warn('Could not take picture', err);
     });
@@ -47,12 +56,7 @@ export class CreateThumbnailPage implements OnInit {
     }
 
   ngOnInit() {
-    this.geolocation.getCurrentPosition().then((position: Geoposition) => {
-      this.coords = position.coords;
-     console.log(`User is at ${this.coords.longitude}, ${this.coords.latitude}`);
-   }).catch(err => {
-     console.warn(`Could not retrieve user position because: ${err.message}`);
-   });
+ 
   }
 
 
@@ -71,10 +75,22 @@ const data = {
   "title": form.value.title,
   "user_id": this.user._id,
   "location": {"type": "Point", "coordinates": [this.coords.longitude, this.coords.latitude ]},
-  "img":"https://files.newsnetz.ch/story/1/1/5/11540743/10/topelement.jpg"
+  "img":this.picture.url
 }
-console.log("debug")
-this.thumbnailsService.postThumbnail(data);
+try {
+  this.thumbnailsService.postThumbnail(data)
+}
+catch(error) {
+  console.error(error);
+  // expected output: ReferenceError: nonExistentFunction is not defined
+  // Note - error messages will vary depending on browser
+  if(!error){
+    this.message="Bien envoyé";
+    const controller = document.querySelector('ion-toast-controller');
+
+  }
+}
+
   }
 
 }
