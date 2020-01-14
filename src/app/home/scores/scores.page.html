@@ -21,8 +21,26 @@
       </ion-segment-button>
     </ion-segment>
 
+          <div *ngIf="location==='city' || location==='country'">
+    <ion-item >
+      <ion-label>Choose filters</ion-label>
+      <ion-select  [(ngModel)]="input"  (ionChange)="filterUser($event)" interface="popover">
+        <div *ngIf="location==='country'">
+          <ion-item *ngFor="let country of countryList">
+        <ion-select-option value="{{country}}">{{country}}</ion-select-option>
+      </ion-item>
+      </div>
+      <div *ngIf="location==='city'">
+        <ion-item *ngFor="let city of cityList">
+          <ion-select-option value="{{city}}">{{city}}</ion-select-option>
+        </ion-item> 
+        </div>
+      </ion-select>
+    </ion-item>
+          </div>
+
   <div *ngIf="contentLoaded">
-    <ion-item *ngFor="let user of users | slice:0:10; let i=index">
+    <ion-item *ngFor="let user of filteredUsers | slice:0:10; let i=index">
       <ion-avatar slot="start">
         <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
       </ion-avatar>
