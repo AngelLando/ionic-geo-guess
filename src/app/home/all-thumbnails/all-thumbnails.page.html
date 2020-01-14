@@ -13,7 +13,9 @@
 		<ion-card *ngFor="let thumbnail of thumbnails">
 			<div class ="container">
 				<img class="thumbnail_img" src="{{thumbnail.img}}" />
-				<ion-card-content class="overtext">Il y a 200 jours</ion-card-content>
+				<ion-card-content *ngIf="thumbnail.numberOfDays>1" class="overtext">{{thumbnail.numberOfDays}} days ago</ion-card-content>
+				<ion-card-content *ngIf="thumbnail.numberOfDays===0" class="overtext">Today</ion-card-content>
+				<ion-card-content *ngIf="thumbnail.numberOfDays===1" class="overtext">Yesterday</ion-card-content>
 			</div>
 			<ion-card-header>
 				<ion-row>

@@ -29,6 +29,17 @@ export class AllThumbnailsPage implements OnInit {
       this.thumbnails = thumbnails;
       this.thumbnails.sort((a, b) => +new Date(b.created_at) - +new Date(a.created_at));
       this.contentLoaded = true;
+      this.getNumberofDays();
+    });
+  }
+
+  getNumberofDays(){
+    this.thumbnails.forEach(function(thumbnail){
+      const newDate = new Date(thumbnail.created_at)
+      const today = new Date();
+     var Difference_In_Time = today.getTime() - newDate.getTime(); 
+var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
+thumbnail.numberOfDays=Math.floor(Difference_In_Days);
     });
   }
 
