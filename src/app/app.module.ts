@@ -19,6 +19,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 import { ThumbnailsService } from './services/thumbnails.service';
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
