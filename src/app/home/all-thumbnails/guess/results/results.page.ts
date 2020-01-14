@@ -19,11 +19,11 @@ import { Subscription } from 'rxjs';
 export class ResultsPage implements OnInit {
   thumbnail: Thumbnail;
   guess: Guess;
+  guessId: string;
   mapMarkers: Marker[];
   mapOptions: MapOptions;
-  guessId: string;
   isLoading = false;
-  private thumbnailSub: Subscription;
+  private guessSub: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -51,7 +51,7 @@ export class ResultsPage implements OnInit {
     }
   }
 
-  ngOnInit() {/*
+  ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
       if(!paramMap.has('guessId')) {
         this.navCtrl.navigateBack('/home/all-thumbnails');
@@ -59,15 +59,15 @@ export class ResultsPage implements OnInit {
       }
       this.guessId = paramMap.get('guessId');
       this.isLoading = true;
-      this.thumbnailSub = this.thumbnailsService
-      .getThumbnail(paramMap.get('guessId'))
+      this.guessSub = this.guessesService
+      .getGuess(paramMap.get('guessId'))
       .subscribe(
-        thumbnail => {
-          this.thumbnail = thumbnail;
+        guess => {
+          this.guess = guess;
           this.isLoading = false;
         }
       )
-    });*/
+    });
   }
 
   onMapReady(map: Map) {

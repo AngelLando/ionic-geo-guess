@@ -18,7 +18,7 @@ import { AuthService } from '../../../auth/auth.service';
 
 export class GuessPage implements OnInit {
   thumbnail: Thumbnail;
-  guessId: string;
+  thumbnailId: string;
   latitude: number;
   longitude: number;
   user: User;
@@ -47,14 +47,14 @@ export class GuessPage implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
-      if(!paramMap.has('guessId')) {
+      if(!paramMap.has('thumbnailId')) {
         this.navCtrl.navigateBack('/home/all-thumbnails');
         return;
       }
-      this.guessId = paramMap.get('guessId');
+      this.thumbnailId = paramMap.get('thumbnailId');
       this.isLoading = true;
       this.thumbnailSub = this.thumbnailsService
-      .getThumbnail(paramMap.get('guessId'))
+      .getThumbnail(paramMap.get('thumbnailId'))
       .subscribe(
         thumbnail => {
           this.thumbnail = thumbnail;

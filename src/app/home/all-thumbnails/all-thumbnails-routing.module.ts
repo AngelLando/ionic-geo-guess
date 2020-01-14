@@ -9,7 +9,7 @@ const routes: Routes = [
     component: AllThumbnailsPage
   },
   {
-    path: 'guess/:guessId',
+    path: 'guess/:thumbnailId',
     loadChildren: () => import('./guess/guess.module').then( m => m.GuessPageModule)
   }
 ];
