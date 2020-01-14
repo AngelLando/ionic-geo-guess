@@ -30,12 +30,10 @@
       <ion-item>
         <ion-label position="floating">Country</ion-label>
         <ion-select #country="ngModel" interface="popover"  required="true" name="country" ngModel>
-          <ion-select-option value="Switzerland">Switzerland</ion-select-option>
-          <ion-select-option value="France">France</ion-select-option>
-          <ion-select-option value="Belgium">Belgium</ion-select-option>
-          <ion-select-option value="Germany">Germany</ion-select-option>
-          <ion-select-option value="Togo">Togo</ion-select-option>
-          <ion-select-option value="Canada">Canada</ion-select-option>
+          <ion-item *ngFor="let country of country_list">
+            <ion-select-option value="{{country}}">{{country}}</ion-select-option>
+          </ion-item>
+       
         </ion-select>
       </ion-item>
 
