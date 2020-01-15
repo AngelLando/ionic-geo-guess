@@ -4,6 +4,7 @@ import { ThumbnailsService } from 'src/app/services/thumbnails.service';
 import { User } from 'src/app/models/user';
 import { LoadingController, AlertController, NavController } from '@ionic/angular';
 import { AuthService } from 'src/app/auth/auth.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-my-thumbnails',
@@ -19,10 +20,10 @@ export class MyThumbnailsPage implements OnInit {
   
   constructor(
     private thumbnailsService: ThumbnailsService,
+    private usersService: UsersService,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
-    private navCtrl: NavController,
-    private auth: AuthService) {
+    private navCtrl: NavController) {
     this.thumbnails = [];
   }
 
@@ -35,15 +36,22 @@ export class MyThumbnailsPage implements OnInit {
       this.thumbnails.sort((a, b) => +new Date(b.created_at) - +new Date(a.created_at));
       this.contentLoaded = true;
       this.getNumberofDays();
+
+      this.thumbnails.forEach(thumbnail => {
+        this.usersService.getUser(thumbnail.user_id).subscribe(res => {
+          thumbnail.username = res.username;        
+        });
+      })
     });
   }
+
   getNumberofDays(){
     this.thumbnails.forEach(function(thumbnail){
       const newDate = new Date(thumbnail.created_at)
       const today = new Date();
-     var Difference_In_Time = today.getTime() - newDate.getTime(); 
-var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
-thumbnail.numberOfDays=Math.floor(Difference_In_Days);
+      var Difference_In_Time = today.getTime() - newDate.getTime(); 
+      var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
+      thumbnail.numberOfDays=Math.floor(Difference_In_Days);
     });
   }
 

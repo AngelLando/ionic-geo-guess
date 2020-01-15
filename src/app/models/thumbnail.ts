@@ -9,5 +9,6 @@ export class Thumbnail {
     };
     user_id: string;
     numberOfDays: number;
+    username?: string;
   }
 
