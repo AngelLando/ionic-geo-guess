@@ -17,13 +17,17 @@ import { Subscription } from 'rxjs';
 })
 
 export class ResultsPage implements OnInit {
+  distance: number;
   thumbnail: Thumbnail;
+  thumbnailId: string;
   guess: Guess;
+  map: Map;
   guessId: string;
   mapMarkers: Marker[];
   mapOptions: MapOptions;
   isLoading = false;
   private guessSub: Subscription;
+  private thumbnailSub: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,7 +35,6 @@ export class ResultsPage implements OnInit {
     private thumbnailsService: ThumbnailsService,
     private guessesService: GuessesService
   ) { 
-    
     {
       this.mapOptions = {
         layers: [
@@ -42,52 +45,55 @@ export class ResultsPage implements OnInit {
         ],
         zoom: 13,
         center: latLng(46.778186, 6.641524)
+        //center: latLng(this.thumbnail.location.coordinates[1], this.thumbnail.location.coordinates[0])
       };
-      this.mapMarkers = [
-        marker([ 46.778186, 6.641524 ], { icon: defaultIcon }),
-        marker([ 46.780796, 6.647395 ], { icon: defaultIcon }),
-        marker([ 46.784992, 6.652267 ], { icon: defaultIcon })
-      ];
     }
   }
 
   ngOnInit() {
+    this.route.queryParams
+    .subscribe(params => {
+      console.log(params.distance);
+      this.distance = Math.round(params.distance*100)/100;
+    });
+
     this.route.paramMap.subscribe(paramMap => {
-      if(!paramMap.has('guessId')) {
-        this.navCtrl.navigateBack('/home/all-thumbnails');
-        return;
-      }
       this.guessId = paramMap.get('guessId');
+      console.log(this.guessId);
+      this.thumbnailId = paramMap.get('thumbnailId');
       this.isLoading = true;
       this.guessSub = this.guessesService
-      .getGuess(paramMap.get('guessId'))
+      .getGuess(this.guessId)
       .subscribe(
         guess => {
           this.guess = guess;
           this.isLoading = false;
         }
+      );
+      this.thumbnailSub = this.thumbnailsService
+      .getThumbnail(this.thumbnailId)
+      .subscribe(
+        thumbnail => {
+          this.thumbnail = thumbnail;
+          this.isLoading = false;
+          this.mapOptions.center = [this.thumbnail.location.coordinates[1], this.thumbnail.location.coordinates[0]];
+          this.addMarker();
+        }
       )
+      console.log(this.thumbnailId);
+      console.log(this.guessId);
     });
   }
+  
 
-  onMapReady(map: Map) {
-    setTimeout(() => map.invalidateSize(), 0);/*
-    var popup = L.popup();
-
-    map.on('click', (e: L.LeafletMouseEvent) => {
-      console.log(e);
-      popup
-      .setLatLng(e.latlng)
-      .setContent("You clicked the map at " + e.latlng.toString())
-      .openOn(map);
-
-      this.latitude = e.latlng.lat;
-      this.longitude = e.latlng.lng;
-
-      console.log(this.latitude);
-      console.log(this.longitude);    
-    });*/
+  addMarker() {
+    this.mapMarkers = [
+      marker([this.thumbnail.location.coordinates[1], this.thumbnail.location.coordinates[0]], { icon: defaultIcon }).bindTooltip('The picture was taken here.'),
+      //marker([ this.thumbnail.location.coordinates[0], this.thumbnail.location.coordinates[1] ], { icon: defaultIcon })
+    ];
   }
+
+
 
   public myClass = 'show';
   public iconRight = 'hide';
@@ -112,3 +118,11 @@ export class ResultsPage implements OnInit {
     }
   }
 }
+
+
+/*
+- position de la map
+- position du marker
+- guess.distance
+- guess.score
+*/

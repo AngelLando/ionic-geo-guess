@@ -9,7 +9,7 @@ const routes: Routes = [
     component: GuessPage
   },
   {
-    path: 'results/:guessID',
+    path: 'results/:guessId',
     loadChildren: () => import('./results/results.module').then( m => m.ResultsPageModule)
   }
 ];

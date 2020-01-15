@@ -49,9 +49,7 @@ export class GuessesService {
 
   postGuess(guessData){
     console.log(guessData);
-    this.http.post<Guess>(this.url, guessData).subscribe(data=>{
-      console.log("debug")
-    });
+    return this.http.post<Guess>(this.url, guessData);
   }
 
   deleteGuess(guessId: string) {    

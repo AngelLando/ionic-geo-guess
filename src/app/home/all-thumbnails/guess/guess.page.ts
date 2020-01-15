@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as L from 'leaflet';
 import { latLng, MapOptions, tileLayer, Map } from 'leaflet';
 import { Thumbnail } from 'src/app/models/thumbnail';
@@ -22,6 +22,7 @@ export class GuessPage implements OnInit {
   latitude: number;
   longitude: number;
   user: User;
+  distance: number;
   isLoading = false;
   private thumbnailSub: Subscription;
   mapOptions: MapOptions;
@@ -32,6 +33,7 @@ export class GuessPage implements OnInit {
     private guessesService:GuessesService,
     private thumbnailsService: ThumbnailsService,
     private navCtrl: NavController,
+    private router: Router
     ) {
     this.mapOptions = {
       layers: [
@@ -47,14 +49,10 @@ export class GuessPage implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
-      if(!paramMap.has('thumbnailId')) {
-        this.navCtrl.navigateBack('/home/all-thumbnails');
-        return;
-      }
       this.thumbnailId = paramMap.get('thumbnailId');
       this.isLoading = true;
       this.thumbnailSub = this.thumbnailsService
-      .getThumbnail(paramMap.get('thumbnailId'))
+      .getThumbnail(this.thumbnailId)
       .subscribe(
         thumbnail => {
           this.thumbnail = thumbnail;
@@ -95,7 +93,7 @@ export class GuessPage implements OnInit {
     var lon1 = this.longitude;
     var lat2 = this.thumbnail.location.coordinates[1];
     var lon2 = this.thumbnail.location.coordinates[0];
-    var d = 0;
+    this.distance = 0;
 
     if ((lat1 !== lat2) && (lon1 !== lon2)) {
       var radlat1 = Math.PI * lat1/180;
@@ -109,18 +107,18 @@ export class GuessPage implements OnInit {
       dist = Math.acos(dist);
       dist = dist * 180/Math.PI;
       dist = dist * 60 * 1.1515;
-      var d = dist * 1.609344;
+      this.distance = dist * 1.609344;
     }
 
-    console.log(d);
+    console.log(this.distance);
 
     var score = 0;
 
-    if(d < 10 ) {
+    if(this.distance < 10 ) {
       score = 100;
-    } else if (d < 100) {
+    } else if (this.distance < 100) {
       score = 60;
-    } else if (d < 1000) {
+    } else if (this.distance < 1000) {
       score = 10;
     };
 
@@ -136,7 +134,7 @@ export class GuessPage implements OnInit {
     }
 
     console.log("debug");
-    this.guessesService.postGuess(data);
+    this.guessesService.postGuess(data).subscribe((guess) => this.router.navigate(['home', 'all-thumbnails', 'guess', this.thumbnail._id, 'results', guess._id], { queryParams: {distance:this.distance}}));
   }
 
 
