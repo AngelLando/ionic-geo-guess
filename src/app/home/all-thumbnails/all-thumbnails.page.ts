@@ -3,10 +3,11 @@ import { Thumbnail } from 'src/app/models/thumbnail';
 import { ThumbnailsService } from 'src/app/services/thumbnails.service';
 import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/auth/auth.service';
+
 import { WebsocketService } from '../../services/websocket.service';
 import { Toast } from '@ionic-native/toast/ngx';
 
-
+import { UsersService } from 'src/app/services/users.service';
 
 
 @Component({
@@ -18,7 +19,11 @@ import { Toast } from '@ionic-native/toast/ngx';
 export class AllThumbnailsPage implements OnInit {
 
   thumbnails: Thumbnail[];
+
   message: string;
+
+  users: User[];
+
   user: User;
   contentLoaded = false;
 
@@ -26,6 +31,7 @@ export class AllThumbnailsPage implements OnInit {
     private wsService: WebsocketService,
     private toast: Toast,
     private thumbnailsService: ThumbnailsService,
+    private usersService: UsersService,
     private auth: AuthService
     ) { 
    }
@@ -42,6 +48,12 @@ export class AllThumbnailsPage implements OnInit {
       this.thumbnails.sort((a, b) => +new Date(b.created_at) - +new Date(a.created_at));
       this.contentLoaded = true;
       this.getNumberofDays();
+
+      this.thumbnails.forEach(thumbnail => {
+        this.usersService.getUser(thumbnail.user_id).subscribe(res => {
+          thumbnail.username = res.username;
+        });
+      })
     });
   }
   
@@ -51,9 +63,9 @@ export class AllThumbnailsPage implements OnInit {
     this.thumbnails.forEach(function(thumbnail){
       const newDate = new Date(thumbnail.created_at)
       const today = new Date();
-     var Difference_In_Time = today.getTime() - newDate.getTime(); 
-var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
-thumbnail.numberOfDays=Math.floor(Difference_In_Days);
+      var Difference_In_Time = today.getTime() - newDate.getTime(); 
+      var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
+      thumbnail.numberOfDays = Math.floor(Difference_In_Days);
     });
   }
 
