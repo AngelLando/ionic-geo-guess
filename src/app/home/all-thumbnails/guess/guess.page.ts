@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as L from 'leaflet';
-import { latLng, MapOptions, marker, Marker, tileLayer, Map, LatLng } from 'leaflet';
+import { latLng, MapOptions, tileLayer, Map } from 'leaflet';
 import { Thumbnail } from 'src/app/models/thumbnail';
 import { ThumbnailsService } from 'src/app/services/thumbnails.service';
 import { GuessesService } from 'src/app/services/guesses.service';
@@ -9,7 +9,6 @@ import { NavController } from '@ionic/angular';
 import { User } from 'src/app/models/user';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../auth/auth.service';
-import { defaultIcon } from 'src/app/models/marker';
 
 @Component({
   selector: 'app-guess',
@@ -19,8 +18,7 @@ import { defaultIcon } from 'src/app/models/marker';
 
 export class GuessPage implements OnInit {
   thumbnail: Thumbnail;
-  guessId: string;
-  mapMarkers: Marker[];
+  thumbnailId: string;
   latitude: number;
   longitude: number;
   user: User;
@@ -44,24 +42,19 @@ export class GuessPage implements OnInit {
       ],
       zoom: 13,
       center: latLng(46.778186, 6.641524)
-    };/*
-    this.mapMarkers = [
-      marker([ 46.778186, 6.641524 ], { icon: defaultIcon }),
-      marker([ 46.780796, 6.647395 ], { icon: defaultIcon }),
-      marker([ 46.784992, 6.652267 ], { icon: defaultIcon })
-    ];*/
+    };
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
-      if(!paramMap.has('guessId')) {
+      if(!paramMap.has('thumbnailId')) {
         this.navCtrl.navigateBack('/home/all-thumbnails');
         return;
       }
-      this.guessId = paramMap.get('guessId');
+      this.thumbnailId = paramMap.get('thumbnailId');
       this.isLoading = true;
       this.thumbnailSub = this.thumbnailsService
-      .getThumbnail(paramMap.get('guessId'))
+      .getThumbnail(paramMap.get('thumbnailId'))
       .subscribe(
         thumbnail => {
           this.thumbnail = thumbnail;

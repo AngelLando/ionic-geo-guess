@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -13,7 +14,8 @@ import { ResultsPage } from './results.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    ResultsPageRoutingModule
+    ResultsPageRoutingModule,
+    LeafletModule
   ],
   declarations: [ResultsPage]
 })

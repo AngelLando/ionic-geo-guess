@@ -1,18 +1,36 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>results</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-header>
   <ion-toolbar color="primary">
     <ion-title>Results</ion-title>
-    <ion-buttons slot="end" (click)="onValidate()">
+    <ion-buttons slot="end">
       <ion-icon size="large" name="checkmark" defaultHref="/home/all-thumbnails"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  Voilà les résultats !
+<ion-content>
+  <div *ngIf="isLoading" class="ion-text-center">
+    <br>
+    <ion-spinner color="primary"></ion-spinner>
+  </div>
+  <div class="container" *ngIf="!isLoading">
+    <div class="leaflet-map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers" (leafletMapReady)="onMapReady($event)"></div> 
+    <ion-grid class="over">
+      <ion-card class="thumbnail">
+        <ion-card-header>
+          <ion-row (click)="toggleClass()">
+            <ion-col size="10.5" class="title">
+              <ion-card-subtitle></ion-card-subtitle> <!--{{ thumbnail.title }}-->
+            </ion-col>
+            <ion-col size="1.5">
+              <ion-icon size="large" [name]="buttonIcon"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-card-header>
+        <div class="container" [className]="myClass">
+          <img class="thumbnailImg" src="" /> <!--{{thumbnail.img}}-->
+        </div>
+      </ion-card>   
+    </ion-grid>
+  </div>
+
 </ion-content>
