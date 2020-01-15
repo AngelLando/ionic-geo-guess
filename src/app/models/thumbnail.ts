@@ -8,6 +8,7 @@ export class Thumbnail {
       type: string;
     };
     user_id: string;
-
+    numberOfDays: number;
+    username?: string;
   }
 
