@@ -3,7 +3,12 @@ import { Thumbnail } from 'src/app/models/thumbnail';
 import { ThumbnailsService } from 'src/app/services/thumbnails.service';
 import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/auth/auth.service';
+
+import { WebsocketService } from '../../services/websocket.service';
+import { Toast } from '@ionic-native/toast/ngx';
+
 import { UsersService } from 'src/app/services/users.service';
+
 
 @Component({
   selector: 'app-all-thumbnails',
@@ -14,18 +19,28 @@ import { UsersService } from 'src/app/services/users.service';
 export class AllThumbnailsPage implements OnInit {
 
   thumbnails: Thumbnail[];
+
+  message: string;
+
   users: User[];
+
   user: User;
   contentLoaded = false;
 
   constructor(
+    private wsService: WebsocketService,
+    private toast: Toast,
     private thumbnailsService: ThumbnailsService,
     private usersService: UsersService,
     private auth: AuthService
-    ) { }
+    ) { 
+   }
+      
 
   ngOnInit() {
   }
+
+  
 
   ionViewWillEnter() {
     this.thumbnailsService.fetchThumbnails().subscribe(thumbnails => {
@@ -41,6 +56,8 @@ export class AllThumbnailsPage implements OnInit {
       })
     });
   }
+  
+ 
 
   getNumberofDays(){
     this.thumbnails.forEach(function(thumbnail){
