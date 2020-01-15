@@ -25,16 +25,23 @@
     "@ionic-native/core": "^5.19.1",
     "@ionic-native/geolocation": "^5.19.1",
     "@ionic-native/google-maps": "^5.5.0",
+    "@ionic-native/local-notifications": "^4.20.0",
+    "@ionic-native/phonegap-local-notification": "^5.19.1",
     "@ionic-native/splash-screen": "^5.19.1",
     "@ionic-native/status-bar": "^5.19.1",
+    "@ionic-native/toast": "^5.19.1",
     "@ionic/angular": "^4.11.7",
     "@ionic/storage": "^2.2.0",
     "cordova-ios": "^5.1.1",
     "cordova-plugin-camera": "^4.1.0",
     "cordova-plugin-geolocation": "^4.0.2",
+    "cordova-plugin-local-notification": "^0.9.0-beta.2",
+    "cordova-plugin-x-toast": "^2.7.2",
     "core-js": "^2.5.4",
     "leaflet": "^1.6.0",
+    "phonegap-plugin-local-notification": "^1.0.1",
     "rxjs": "^6.5.4",
+    "rxjs-compat": "^6.5.4",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
   },
@@ -85,7 +92,10 @@
       "cordova-plugin-camera": {},
       "cordova-plugin-geolocation": {
         "GEOLOCATION_USAGE_DESCRIPTION": "To locate you"
-      }
+      },
+      "cordova-plugin-local-notification": {},
+      "phonegap-plugin-local-notification": {},
+      "cordova-plugin-x-toast": {}
     },
     "platforms": [
       "ios"

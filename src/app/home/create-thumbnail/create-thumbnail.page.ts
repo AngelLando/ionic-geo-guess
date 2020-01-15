@@ -11,6 +11,8 @@ import { User } from 'src/app/models/user';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../../auth/auth.service';
 import { NavController, AlertController } from '@ionic/angular';
+import { WebsocketService } from '../../services/websocket.service';
+import { Toast } from '@ionic-native/toast/ngx';
 
 
 
@@ -51,6 +53,8 @@ export class CreateThumbnailPage implements OnInit {
   }
 
   constructor(
+    private wsService: WebsocketService,
+    private toast: Toast,
     private navCtrl: NavController,
     private auth: AuthService,
     private thumbnailsService:ThumbnailsService,
@@ -59,6 +63,7 @@ export class CreateThumbnailPage implements OnInit {
     private pictureService:PictureService
     ) { 
       this.thumbnails=[];
+      
 
     }
 
@@ -99,6 +104,18 @@ const data = {
   next: () => {
     this.isLoading = false;
     this.navCtrl.navigateBack('/home/my-thumbnails');
+        
+    this.wsService
+    .listen()
+    .subscribe(message => {
+      this.toast.show('New thumbnail has been posted.', '5000', 'top').subscribe(
+        toast => {
+          console.log(toast);
+        }
+      );
+      console.log("New thumbnail posted")
+      // Do something when a message is received
+    });
   },
   error: err => {
     this.loginError = true;
