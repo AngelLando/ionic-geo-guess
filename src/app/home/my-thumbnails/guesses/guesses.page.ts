@@ -58,6 +58,7 @@ export class GuessesPage implements OnInit {
           this.isLoading = false;
           this.mapOptions.center = [this.thumbnail.location.coordinates[1], this.thumbnail.location.coordinates[0]];
           this.addMarker();
+          console.log(this.mapMarkers); // ok
         }
       )
 
@@ -73,6 +74,7 @@ export class GuessesPage implements OnInit {
   
         this.guesses.forEach(function(guess){
           console.log(guess.location.coordinates[0]); // ok
+          //console.log(this.mapMarkers); // undefined :(
           
           // ne fonctionne pas : "Cannot read property 'mapMarkers' of undefined"
           /*
@@ -102,8 +104,6 @@ export class GuessesPage implements OnInit {
     this.mapMarkers.push(
       marker([46.778186, 6.641524], { icon: redIcon }).bindTooltip('juste un test...'),
     )*/
-
-    console.log(this.mapMarkers);
   }
 
   doRefresh(ev: any) {
