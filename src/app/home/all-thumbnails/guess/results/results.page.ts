@@ -4,7 +4,6 @@ import { Thumbnail } from 'src/app/models/thumbnail';
 import { ThumbnailsService } from 'src/app/services/thumbnails.service';
 import { Guess } from 'src/app/models/guess';
 import { GuessesService } from 'src/app/services/guesses.service';
-import { NavController } from '@ionic/angular';
 import * as L from 'leaflet';
 import { latLng, MapOptions, marker, Marker, tileLayer, Map, LatLng } from 'leaflet';
 import { defaultIcon } from 'src/app/models/marker';
@@ -21,7 +20,6 @@ export class ResultsPage implements OnInit {
   thumbnail: Thumbnail;
   thumbnailId: string;
   guess: Guess;
-  map: Map;
   guessId: string;
   mapMarkers: Marker[];
   mapOptions: MapOptions;
@@ -31,7 +29,6 @@ export class ResultsPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private navCtrl: NavController,
     private thumbnailsService: ThumbnailsService,
     private guessesService: GuessesService
   ) { 
@@ -45,7 +42,6 @@ export class ResultsPage implements OnInit {
         ],
         zoom: 13,
         center: latLng(46.778186, 6.641524)
-        //center: latLng(this.thumbnail.location.coordinates[1], this.thumbnail.location.coordinates[0])
       };
     }
   }
@@ -53,13 +49,11 @@ export class ResultsPage implements OnInit {
   ngOnInit() {
     this.route.queryParams
     .subscribe(params => {
-      console.log(params.distance);
       this.distance = Math.round(params.distance*100)/100;
     });
 
     this.route.paramMap.subscribe(paramMap => {
       this.guessId = paramMap.get('guessId');
-      console.log(this.guessId);
       this.thumbnailId = paramMap.get('thumbnailId');
       this.isLoading = true;
       this.guessSub = this.guessesService
@@ -80,20 +74,14 @@ export class ResultsPage implements OnInit {
           this.addMarker();
         }
       )
-      console.log(this.thumbnailId);
-      console.log(this.guessId);
     });
   }
   
-
   addMarker() {
     this.mapMarkers = [
       marker([this.thumbnail.location.coordinates[1], this.thumbnail.location.coordinates[0]], { icon: defaultIcon }).bindTooltip('The picture was taken here.'),
-      //marker([ this.thumbnail.location.coordinates[0], this.thumbnail.location.coordinates[1] ], { icon: defaultIcon })
     ];
   }
-
-
 
   public myClass = 'show';
   public iconRight = 'hide';
@@ -118,11 +106,3 @@ export class ResultsPage implements OnInit {
     }
   }
 }
-
-
-/*
-- position de la map
-- position du marker
-- guess.distance
-- guess.score
-*/

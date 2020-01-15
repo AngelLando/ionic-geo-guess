@@ -39,7 +39,7 @@ export class MyThumbnailsPage implements OnInit {
 
       this.thumbnails.forEach(thumbnail => {
         this.usersService.getUser(thumbnail.user_id).subscribe(res => {
-          thumbnail.username = res.username;        
+          thumbnail.username = res.username;      
         });
       })
     });

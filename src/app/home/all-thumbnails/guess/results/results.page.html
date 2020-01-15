@@ -8,10 +8,6 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="isLoading" class="ion-text-center">
-    <br>
-    <ion-spinner color="primary"></ion-spinner>
-  </div>
   <div class="container" *ngIf="guess">
     <div class="leaflet-map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers" [(leafletCenter)]="mapOptions.center"></div> 
     <ion-grid class="over">
@@ -22,7 +18,7 @@
               <p>Distance in KM:</p>
             </ion-col>
             <ion-col size="3">
-              <p>{{ distance }}</p> <!--{{ guess.distance }}-->
+              <p>{{ distance }}</p>
             </ion-col>
           </ion-row>
           <ion-row>
@@ -30,7 +26,7 @@
               <p>Your score:</p>
             </ion-col>
             <ion-col size="3">
-              <p>{{ guess.score }}</p>  <!---->
+              <p>{{ guess.score }}</p>
             </ion-col>
           </ion-row>
         </ion-card-header>

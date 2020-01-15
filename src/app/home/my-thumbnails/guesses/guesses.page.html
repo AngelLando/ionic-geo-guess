@@ -12,4 +12,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
+  <div class="container" *ngIf="thumbnail">
+    <div class="leaflet-map" leaflet [leafletOptions]="mapOptions" [leafletLayers]="mapMarkers" [(leafletCenter)]="mapOptions.center"></div> 
+  </div>
 </ion-content>

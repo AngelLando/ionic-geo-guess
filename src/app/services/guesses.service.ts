@@ -4,8 +4,10 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { map, tap, take, switchMap } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
+import { ThumbnailsService } from 'src/app/services/thumbnails.service';
 import { User } from '../models/user';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { Thumbnail } from '../models/thumbnail';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,8 @@ export class GuessesService {
 
   private _guesses = new BehaviorSubject<Guess[]>([]);
   private user: User;
+  private thumbnail: Thumbnail;
+  private thumbnailsService: ThumbnailsService;
   readonly url = `${environment.apiUrl}/guesses`;
 
   get guesses() {
@@ -25,6 +29,17 @@ export class GuessesService {
 
   fetchGuesses() {
     return this.http.get<Guess[]>(this.url);
+  }
+
+  fetchThumbnailsGuesses() {
+    /*this.thumbnailsService.fetchThumbnails().subscribe(thumbnail => {
+      this.thumbnail = thumbnail;
+    });
+    return this.http
+    .get<Guess[]>(this.url)
+    .pipe(map(res => {      
+      return res.filter(guesses => guesses.thumbnail_id == this.thumbnail._id);
+    }));*/
   }
 
   fetchMyGuesses() {

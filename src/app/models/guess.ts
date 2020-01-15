@@ -9,6 +9,10 @@ export class Guess {
     };
     user_id: string;
     thumbnail_id: string;
-    score: number
+    score: number;
+    geolocation?: {
+      coordinates: number[];
+      type: string;
+    };
   }
 
