@@ -21,7 +21,6 @@ export class GuessesPage implements OnInit {
   thumbnailId: string;
   guesses: Guess[];
   mapMarkers: Marker[];
-  guessMarkers: Marker[];
   mapOptions: MapOptions;
   isLoading = false;
   private thumbnailSub: Subscription;
@@ -58,52 +57,27 @@ export class GuessesPage implements OnInit {
           this.isLoading = false;
           this.mapOptions.center = [this.thumbnail.location.coordinates[1], this.thumbnail.location.coordinates[0]];
           this.addMarker();
-          console.log(this.mapMarkers); // ok
         }
       )
-
-      this.guessesService.fetchMyGuesses().subscribe(guesses => {
-        this.guesses = guesses;
-        this.contentLoaded = false;
-  
-        this.guesses.forEach(guess => {
-          this.thumbnailsService.getThumbnail(guess.thumbnail_id).subscribe(res => {
-            guess.geolocation = res.location;
-          });
-        })
-  
-        this.guesses.forEach(function(guess){
-          console.log(guess.location.coordinates[0]); // ok
-          //console.log(this.mapMarkers); // undefined :(
-          
-          // ne fonctionne pas : "Cannot read property 'mapMarkers' of undefined"
-          /*
-          this.mapMarkers.push(
-            marker([guess.location.coordinates[1], guess.location.coordinates[0]], { icon: defaultIcon }),
-          )*/
-          
-
-          // ne fonctionne pas : "Cannot read property 'mapMarkers' of undefined"
-          /*
-          this.mapMarkers.push(
-            marker([46.778186, 6.641524], { icon: redIcon }).bindTooltip('You took the picture here.'),
-          )*/
-
-        });
-      });
     });
+    console.log(this.thumbnailId)
+    this.guessesService.fetchGuesses().subscribe(guesses => {
+      this.guesses = guesses;
+      this.contentLoaded = true;
+      this.guesses.forEach(guess => {
+        this.thumbnailsService.getThumbnail(this.thumbnailId).subscribe(res => {
+          guess.geolocation = res.location;
+        });
+      })
+      console.log(guesses.filter(guesses => guesses.thumbnail_id == this.thumbnailId));
+    });    
   }
 
   addMarker() {
     this.mapMarkers = [
       marker([this.thumbnail.location.coordinates[1], this.thumbnail.location.coordinates[0]], { icon: redIcon }).bindTooltip('You took the picture here.'),
     ];
-
-    // ok fonctionne
-    /*
-    this.mapMarkers.push(
-      marker([46.778186, 6.641524], { icon: redIcon }).bindTooltip('juste un test...'),
-    )*/
+    // ajouter les markers pour les guesses
   }
 
   doRefresh(ev: any) {
