@@ -31,17 +31,6 @@ export class GuessesService {
     return this.http.get<Guess[]>(this.url);
   }
 
-  fetchThumbnailsGuesses() {
-    /*this.thumbnailsService.fetchThumbnails().subscribe(thumbnail => {
-      this.thumbnail = thumbnail;
-    });
-    return this.http
-    .get<Guess[]>(this.url)
-    .pipe(map(res => {      
-      return res.filter(guesses => guesses.thumbnail_id == this.thumbnail._id);
-    }));*/
-  }
-
   fetchMyGuesses() {
     this.auth.getUser().subscribe(user => {
       this.user = user;
