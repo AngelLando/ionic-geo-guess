@@ -6,7 +6,7 @@ import { Guess } from 'src/app/models/guess';
 import { GuessesService } from 'src/app/services/guesses.service';
 import * as L from 'leaflet';
 import { latLng, MapOptions, marker, Marker, tileLayer, Map, LatLng } from 'leaflet';
-import { defaultIcon } from 'src/app/models/marker';
+import { redIcon } from 'src/app/models/marker';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -79,7 +79,7 @@ export class ResultsPage implements OnInit {
   
   addMarker() {
     this.mapMarkers = [
-      marker([this.thumbnail.location.coordinates[1], this.thumbnail.location.coordinates[0]], { icon: defaultIcon }).bindTooltip('The picture was taken here.'),
+      marker([this.thumbnail.location.coordinates[1], this.thumbnail.location.coordinates[0]], { icon: redIcon }).bindTooltip('The picture was taken here.'),
     ];
   }
 

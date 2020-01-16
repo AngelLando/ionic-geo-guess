@@ -19,6 +19,7 @@ export class GuessesPage implements OnInit {
 
   thumbnail: Thumbnail;
   thumbnailId: string;
+  filteredGuesses: Guess[];
   guesses: Guess[];
   mapMarkers: Marker[];
   mapOptions: MapOptions;
@@ -29,7 +30,7 @@ export class GuessesPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private thumbnailsService: ThumbnailsService,
-    private guessesService: GuessesService
+    private guessesService: GuessesService,
   ) {
     {
       this.mapOptions = {
@@ -43,6 +44,7 @@ export class GuessesPage implements OnInit {
         center: latLng(46.778186, 6.641524)
       };
     }
+    this.mapMarkers = [];
   }
 
   ngOnInit() {
@@ -57,7 +59,7 @@ export class GuessesPage implements OnInit {
           this.isLoading = false;
           this.mapOptions.center = [this.thumbnail.location.coordinates[1], this.thumbnail.location.coordinates[0]];
           this.addMarker();
-          console.log(this.mapMarkers); // ok
+          console.log(this.mapMarkers);
         }
       )
     });
@@ -71,25 +73,13 @@ export class GuessesPage implements OnInit {
         });
       })
 
-      console.log(guesses.filter(guesses => guesses.thumbnail_id == this.thumbnailId));
+      this.filteredGuesses = guesses.filter(guesses => guesses.thumbnail_id == this.thumbnailId);
 
-      this.guesses.forEach(function(guess){
-        console.log(guess.location.coordinates[0]); // ok
-        //console.log(this.mapMarkers); // undefined :(
+      this.filteredGuesses.forEach((guess) =>{
 
-        // ne fonctionne pas : "Cannot read property 'mapMarkers' of undefined"
-        /*
         this.mapMarkers.push(
           marker([guess.location.coordinates[1], guess.location.coordinates[0]], { icon: defaultIcon }),
-        )*/
-
-
-        // ne fonctionne pas : "Cannot read property 'mapMarkers' of undefined"
-        /*
-        this.mapMarkers.push(
-          marker([46.778186, 6.641524], { icon: redIcon }).bindTooltip('You took the picture here.'),
-        )*/
-
+        )
       });
     });    
   }
@@ -98,12 +88,6 @@ export class GuessesPage implements OnInit {
     this.mapMarkers = [
       marker([this.thumbnail.location.coordinates[1], this.thumbnail.location.coordinates[0]], { icon: redIcon }).bindTooltip('You took the picture here.'),
     ];
-
-    // ok fonctionne
-    /*
-    this.mapMarkers.push(
-      marker([46.778186, 6.641524], { icon: redIcon }).bindTooltip('juste un test...'),
-    )*/
   }
 
   doRefresh(ev: any) {
