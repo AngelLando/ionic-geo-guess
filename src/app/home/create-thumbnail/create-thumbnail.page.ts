@@ -106,18 +106,7 @@ const data = {
   next: () => {
     this.isLoading = false;
     this.navCtrl.navigateBack('/home/my-thumbnails');
-        
-    this.wsService
-    .listen()
-    .subscribe(message => {
-      this.toast.show('New thumbnail has been posted.', '5000', 'top').subscribe(
-        toast => {
-          console.log(toast);
-        }
-      );
-      console.log("New thumbnail posted")
-      // Do something when a message is received
-    });
+
   },
   error: err => {
     this.loginError = true;
