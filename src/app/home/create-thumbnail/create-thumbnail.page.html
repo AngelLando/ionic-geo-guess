@@ -11,8 +11,17 @@
     <!-- ... -->
     <form #createThumbnailForm="ngForm" (submit)="onSubmit(createThumbnailForm)">
                <!-- img input -->
+
+                   
+  <!-- picture button -->
+    <div class="ion-padding" *ngIf="!picture">
+      <ion-button (click)="takePicture()" expand="block"  class="ion-no-margin">
+      <ion-spinner color="light" name="dots" *ngIf="isLoadingPicture" ></ion-spinner>
+      <span *ngIf="!isLoadingPicture">Take picture</span>
+      <ion-icon *ngIf="!isLoadingPicture" name="camera"></ion-icon>
+    </ion-button>
+    </div>
                
-      <ion-button (click)="takePicture()">Take pictures</ion-button> 
  <img *ngIf="picture" src="{{picture.url}}" />
  <ion-item lines="none" *ngIf="imgNotSet">
   <ion-text color='danger'>Image is required.</ion-text>
@@ -30,7 +39,7 @@
     
   <!-- Submit button -->
     <div class="ion-padding">
-      <ion-button expand="block" type="submit" [disabled]="createThumbnailForm.invalid" class="ion-no-margin">
+      <ion-button expand="block" type="submit" [disabled]="createThumbnailForm.invalid || !picture" class="ion-no-margin">
       <ion-spinner color="light" name="dots" *ngIf="isLoading"></ion-spinner>
       <span *ngIf="!isLoading">Submit Thumbnail</span>
     </ion-button>

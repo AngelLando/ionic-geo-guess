@@ -58,6 +58,8 @@ export class LoginPage {
       error: err => {
         this.loginError = true;
         console.warn(`Authentication failed: ${err.message}`);
+        this.isLoading = false;
+
       }
     });
   }
