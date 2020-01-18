@@ -10,18 +10,20 @@ import { User } from 'src/app/models/user';
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit {
-
+  booleanValue=true;
   user: User;
 
   constructor(
     private auth: AuthService,
     private router: Router
   ) { }
-
+ 
   ngOnInit() {
     this.auth.getUser().subscribe(user => {
       this.user = user;
     });
+  }
+  toggleChange($event){
   }
 
   logOut() {

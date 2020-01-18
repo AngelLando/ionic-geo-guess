@@ -33,22 +33,24 @@ export class CreateThumbnailPage implements OnInit {
   picture:QimgImage;
   loginError: boolean;
   isLoading=false;
+  isLoadingPicture=false;
   imgNotSet=false;
 
   //take picture
   takePicture() {
-    
+    this.isLoadingPicture=true;
     this.pictureService.takeAndUploadPicture().subscribe(picture => {
       this.picture = picture;
   
       this.geolocation.getCurrentPosition().then((position: Geoposition) => {
         this.coords = position.coords;
-       console.log(`User is at ${this.coords.longitude}, ${this.coords.latitude}`);
      }).catch(err => {
        console.warn(`Could not retrieve user position because: ${err.message}`);
+       this.isLoadingPicture=false;
      });
     }, err => {
       console.warn('Could not take picture', err);
+      this.isLoadingPicture=false;
     });
   }
 

@@ -35,7 +35,7 @@ export class WebsocketService {
         });
       }),
       // When a message is emitted, change the value to the message content
-      map((event: MessageEvent) => event.data)
+      map((event: MessageEvent) => JSON.parse(event.data))
     );
   }
   public send(data: any): void {

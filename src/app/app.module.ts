@@ -14,6 +14,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ThumbnailsService } from './services/thumbnails.service';
 import { Toast } from '@ionic-native/toast/ngx';
+import {SettingsPage} from 'src/app/home/settings/settings.page'
 
 
 
@@ -22,6 +23,7 @@ import { Toast } from '@ionic-native/toast/ngx';
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, IonicStorageModule.forRoot(), LeafletModule.forRoot()],
   providers: [
+    SettingsPage,
     ThumbnailsService,
     Toast,
     Camera,
