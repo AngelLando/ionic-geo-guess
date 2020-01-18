@@ -18,6 +18,7 @@ import {SettingsPage} from 'src/app/home/settings/settings.page'
 
 
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as L from 'leaflet';
+import { AlertController } from '@ionic/angular';
 import { latLng, MapOptions, tileLayer, Map } from 'leaflet';
 import { Thumbnail } from 'src/app/models/thumbnail';
 import { ThumbnailsService } from 'src/app/services/thumbnails.service';
@@ -24,10 +25,12 @@ export class GuessPage implements OnInit {
   user: User;
   distance: number;
   isLoading = false;
+  posted=false;
   private thumbnailSub: Subscription;
   mapOptions: MapOptions;
   
   constructor(
+    public alertController: AlertController,
     private auth: AuthService,
     private route: ActivatedRoute,
     private guessesService:GuessesService,
@@ -133,8 +136,29 @@ export class GuessPage implements OnInit {
       "location": {"type": "Point", "coordinates": [this.longitude, this.latitude ]}
     }
 
-    console.log("debug");
-    this.guessesService.postGuess(data).subscribe((guess) => this.router.navigate(['home', 'all-thumbnails', 'guess', this.thumbnail._id, 'results', guess._id], { queryParams: {distance:this.distance}}));
+    this.guessesService.fetchGuesses().subscribe(guesses =>{
+      guesses.forEach(guess => {
+        if (guess.user_id == this.user._id && guess.thumbnail_id == this.thumbnail._id){
+       this.posted=true;
+        } 
+      });
+      if (this.posted==false){
+        this.guessesService.postGuess(data).subscribe({
+          next: (guess) => {
+              this.router.navigate(['home', 'all-thumbnails', 'guess', this.thumbnail._id, 'results', guess._id], { queryParams: {distance:this.distance}})
+          },
+          error: err => {   
+           this.presentAlert('You cannot guess your own thumbnail.');
+            console.warn(`Posted Thumbnail failed: ${err.message}`);
+          }
+          })
+      }else{
+        this.presentAlert('You already tried to guess this thumbnail');
+      }
+          })
+      
+
+
   }
 
 
@@ -145,6 +169,15 @@ export class GuessPage implements OnInit {
 
   setButton() {
     this.availableIcon = "checkmark";
+  }
+   presentAlert(message) {
+    const alert = document.createElement('ion-alert');
+    alert.header = 'Alert';
+    alert.message = message;
+    alert.buttons = ['OK'];
+  
+    document.body.appendChild(alert);
+    return alert.present();
   }
 
   toggleClass(){

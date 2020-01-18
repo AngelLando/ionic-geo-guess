@@ -53,8 +53,8 @@ export class AppComponent {
        });
       
         this.UsersService.getUser(message.user_id).subscribe( user=>{
-            const message="New Guess has been posted by "+user.username+" on your thumbnail "+this.thumbnail.title+" .";
             if(this.thumbnail.user_id==this.user._id){
+              const message="New Guess has been posted by "+user.username+" on your thumbnail "+this.thumbnail.title+" .";
               this.toast.show(message, '6000', 'top').subscribe(
             toast => {
               console.log(toast);
