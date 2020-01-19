@@ -48,6 +48,7 @@ export class AppComponent {
       this.auth.getUser().subscribe(user => {
         this.user = user;
       });
+
       this.webSocket.listen().subscribe((message:MessageEvent) => { 
         this.message=JSON.parse(message.data);
 
@@ -55,7 +56,7 @@ export class AppComponent {
          this.thumbnail=thumbnail
        });
       
-        this.UsersService.getUser(this.message.user_id).subscribe( user=>{
+        this.usersService.getUser(this.message.user_id).subscribe( user=>{
             if(this.thumbnail.user_id==this.user._id){
               const message="New Guess has been posted by "+user.username+" on your thumbnail "+this.thumbnail.title+" .";
               this.toast.show(message, '6000', 'top').subscribe(

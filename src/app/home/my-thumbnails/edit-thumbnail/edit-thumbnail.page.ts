@@ -5,7 +5,6 @@ import { NavController, AlertController } from '@ionic/angular';
 
 import { Thumbnail } from 'src/app/models/thumbnail';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-edit-thumbnail',
@@ -18,7 +17,6 @@ export class EditThumbnailPage implements OnInit {
   form: FormGroup;
   isLoading = false;
   isUpdating = false;
-  private thumbnailSub: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,13 +27,9 @@ export class EditThumbnailPage implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
-      if(!paramMap.has('thumbnailId')) {
-        this.navCtrl.navigateBack('/home/my-thumbnails');
-        return;
-      }
       this.thumbnailId = paramMap.get('thumbnailId');
       this.isLoading = true;
-      this.thumbnailSub = this.thumbnailsService
+      this.thumbnailsService
       .getThumbnail(paramMap.get('thumbnailId'))
       .subscribe(
         thumbnail => {
