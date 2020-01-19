@@ -106,6 +106,7 @@ export class SettingsPage implements OnInit {
             loadingEl.present();
             this.usersService.deleteUser(userId).subscribe(() => {
               loadingEl.dismiss();
+              this.auth.logOut();
               this.navCtrl.navigateBack('/login');
             });
           })
