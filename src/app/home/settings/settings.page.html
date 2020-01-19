@@ -14,7 +14,7 @@
     <ion-grid>
         <ion-row>
           <ion-col>
-            <div class="title">Notifications settings</div>
+            <div class="title">Notifications</div>
           </ion-col>
         </ion-row>
         <ion-row class="notifs-setting-line">
@@ -38,42 +38,58 @@
             <div class="title">Profile</div>
           </ion-col>
         </ion-row>
-        <ion-row class="profile-line">
-          <ion-col>
-            <ion-avatar>
-              <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-            </ion-avatar>
-          </ion-col>
-          <ion-col>
-            <ion-fab-button class="ion-float-right">
-              <ion-icon name="create"></ion-icon>
-            </ion-fab-button>
-          </ion-col>
-        </ion-row>
-        <ion-row class="profile-line">
-          <ion-col>
-            <ion-label class="label" position="floating">username</ion-label>
-            <div>{{ user.username }}</div>
-          </ion-col>
-          <ion-col>
-            <ion-fab-button class="ion-float-right">
-              <ion-icon name="create"></ion-icon>
-            </ion-fab-button>
-          </ion-col>
-        </ion-row>
-        <ion-row class="profile-line">
-          <ion-col>
-            <ion-label class="label" position="floating">password</ion-label>
-            <div>•••••••••••••••••</div>
-          </ion-col>
-          <ion-col>
-            <ion-fab-button class="ion-float-right">
-                <ion-icon name="create"></ion-icon>
-            </ion-fab-button>
-          </ion-col>
-        </ion-row>
-    </ion-grid>
-    <ion-button class="save-button" expand="block">Save changes</ion-button>
+
+        <form [formGroup]="form">
+          <ion-row class="profile-line">
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Username</ion-label>
+                <ion-input
+                  type="text"
+                  formControlName="username"
+                ></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Country</ion-label>
+                <ion-select formControlName="country" interface="popover" name="country">
+                  <ion-item *ngFor="let country of country_list">
+                    <ion-select-option [value]="country">{{country}}</ion-select-option>
+                  </ion-item>
+                </ion-select>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">City</ion-label>
+                <ion-input
+                  type="text"
+                  formControlName="city"
+                ></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="!form.get('username').valid && form.get('username').touched">
+            <ion-col size-sm="6" offset-sm="3">
+                <p>Username must be between 1 and 16 characters.</p>
+              </ion-col>
+          </ion-row>
+        </form>
+
+      </ion-grid>
+    <ion-button (click)="onUpdateSettings()" [disabled]="!form?.valid" class="save-button" expand="block">
+        <ion-spinner color="light" name="dots" *ngIf="isUpdating"></ion-spinner>
+        <span *ngIf="!isUpdating">Save</span>
+    </ion-button>
+    <ion-row>
+      <ion-col>
+        <div class="title">Account</div>
+      </ion-col>
+    </ion-row>
+    <ion-row class="notifs-setting-line">
+      <ion-col>
+        <ion-button (click)="onDeleteAccount(user._id)" color="danger" expand="block">
+            <span>Delete my account</span>
+        </ion-button>
+      </ion-col>
+    </ion-row>
   </ion-content>
   
   

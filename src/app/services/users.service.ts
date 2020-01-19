@@ -20,4 +20,12 @@ export class UsersService {
   getUser(userId: string) {
     return this.http.get<User>(this.url + `/${userId}`);
   }
+
+  updateUser(userData) {    
+    return this.http.patch(this.url + `/${userData._id}`, userData);
+  }
+
+  deleteUser(userId: string) {    
+    return this.http.delete(this.url + `/${userId}`);
+  }
 }

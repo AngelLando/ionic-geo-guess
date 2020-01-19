@@ -48,11 +48,11 @@ export class AppComponent {
         this.user = user;
       });
       this.webSocket.listen().subscribe(message => { 
-  this.thumbnailsService.getThumbnail(message.thumbnail_id).subscribe(thumbnail=>{
-         this.thumbnail=thumbnail
+        this.thumbnailsService.getThumbnail(message.thumbnail_id).subscribe(thumbnail=>{
+          this.thumbnail=thumbnail
        });
       
-        this.UsersService.getUser(message.user_id).subscribe( user=>{
+        this.usersService.getUser(message.user_id).subscribe( user=>{
             if(this.thumbnail.user_id==this.user._id){
               const message="New Guess has been posted by "+user.username+" on your thumbnail "+this.thumbnail.title+" .";
               this.toast.show(message, '6000', 'top').subscribe(
