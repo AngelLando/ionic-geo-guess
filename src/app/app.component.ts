@@ -21,6 +21,7 @@ export class AppComponent {
   users: User[];
   private user: User;
   private thumbnail: Thumbnail;
+  private message;
 
 
   constructor(
@@ -47,12 +48,15 @@ export class AppComponent {
       this.auth.getUser().subscribe(user => {
         this.user = user;
       });
-      this.webSocket.listen().subscribe(message => { 
-        this.thumbnailsService.getThumbnail(message.thumbnail_id).subscribe(thumbnail=>{
-          this.thumbnail=thumbnail
+
+      this.webSocket.listen().subscribe((message:MessageEvent) => { 
+        this.message=JSON.parse(message.data);
+
+  this.thumbnailsService.getThumbnail(this.message.thumbnail_id).subscribe(thumbnail=>{
+         this.thumbnail=thumbnail
        });
       
-        this.usersService.getUser(message.user_id).subscribe( user=>{
+        this.usersService.getUser(this.message.user_id).subscribe( user=>{
             if(this.thumbnail.user_id==this.user._id){
               const message="New Guess has been posted by "+user.username+" on your thumbnail "+this.thumbnail.title+" .";
               this.toast.show(message, '6000', 'top').subscribe(
@@ -63,7 +67,7 @@ export class AppComponent {
             }
      
           }
-        )   
+        )  
         }
       )
     });
