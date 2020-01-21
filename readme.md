@@ -21,7 +21,7 @@ cd ionic-geo-guess\src\environments
 
 * Duplicate this file to create a copy named environment.prod.ts and replace the content by the following:
 
-Replace the qimgUrl with your secret key.
+(replace the qimgUrl with your secret key)
 
 ```
 export const environment = {
@@ -40,7 +40,9 @@ export const environment = {
 ```
 ionic serve --prod
 ```
-* everytime after
+
+* Everytime after
+
 ```
 ionic serve
 ```
