@@ -43,11 +43,11 @@ npm install
 
 ```
 
-### Duplicate the file environnment.sample.ts
+### Environment files
 
 cd ionic-geo-guess\src\environments
 
-* Duplicate this file to create a copy named environment.prod.ts and replace the content by the following:
+* Duplicate the file environment.sample.ts to create a copy named environment.ts and replace the content by the following:
 
 (replace the qimgSecret with your secret key)
 
@@ -60,7 +60,9 @@ export const environment = {
 };
 ```
 
-* Duplicate a second time this file with the same content.
+* This time, duplicate the file environment.ts to create a copy named environment.prod.ts with the same content.
+
+(But we keep in mind that for a real project, the url would certainly be different)
 
 
 ### Serve the application
