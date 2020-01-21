@@ -67,7 +67,6 @@ tab.push(item.city);
   }
 
   showSelectedValue(ev:any){
-console.log(this.input)
   }
 
   filterUser(ev:any){

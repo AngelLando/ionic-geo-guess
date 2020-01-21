@@ -43,7 +43,6 @@ export class ThumbnailsService {
   }
 
   postThumbnail(thumbnailData){
-    console.log(thumbnailData);
     return this.http.post<Thumbnail>(this.url, thumbnailData);
   }
 

@@ -70,17 +70,13 @@ export class GuessPage implements OnInit {
     var popup = L.popup();
 
     map.on('click', (e: L.LeafletMouseEvent) => {
-      console.log(e);
       popup
       .setLatLng(e.latlng)
       .setContent("You clicked the map at " + e.latlng.toString())
       .openOn(map);
 
       this.latitude = e.latlng.lat;
-      this.longitude = e.latlng.lng;
-
-      console.log(this.latitude);
-      console.log(this.longitude);      
+      this.longitude = e.latlng.lng;   
     });
   }
 
@@ -112,9 +108,6 @@ export class GuessPage implements OnInit {
       dist = dist * 60 * 1.1515;
       this.distance = dist * 1.609344;
     }
-
-    console.log(this.distance);
-
     var score = 0;
 
     if(this.distance < 10 ) {
@@ -124,10 +117,6 @@ export class GuessPage implements OnInit {
     } else if (this.distance < 1000) {
       score = 10;
     };
-
-    console.log(score);
-    console.log(this.latitude);
-    console.log(this.longitude);
 
     const data = {
       "thumbnail_id": this.thumbnail._id,

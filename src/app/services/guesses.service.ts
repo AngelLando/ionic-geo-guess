@@ -52,7 +52,6 @@ export class GuessesService {
   }
 
   postGuess(guessData){
-    console.log(guessData);
     return this.http.post<Guess>(this.url, guessData);
   }
 

@@ -59,11 +59,9 @@ export class GuessesPage implements OnInit {
           this.isLoading = false;
           this.mapOptions.center = [this.thumbnail.location.coordinates[1], this.thumbnail.location.coordinates[0]];
           this.addMarker();
-          console.log(this.mapMarkers);
         }
       )
     });
-    console.log(this.thumbnailId)
     this.guessesService.fetchGuesses().subscribe(guesses => {
       this.guesses = guesses;
       this.contentLoaded = true;

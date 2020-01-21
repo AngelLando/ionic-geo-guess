@@ -49,7 +49,6 @@ export class AuthService {
       }),
       map(auth => {
         this.authSource.next(auth);
-        console.log(`User ${auth.user.username} logged in`);
         return auth.user;
       })
     );
@@ -58,7 +57,6 @@ export class AuthService {
   logOut() {
     this.authSource.next(null);
     this.storage.remove('auth');
-    console.log('User logged out');
   }
 
   signUp(username: string, password: string, country:string, city:string) {

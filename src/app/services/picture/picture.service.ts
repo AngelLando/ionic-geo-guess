@@ -14,8 +14,6 @@ import { QimgImage } from '../../models/qimg-image';
 export class PictureService {
 
   constructor(private camera: Camera, private http: HttpClient) {
-    console.log('Hello PictureService Provider');
-    console.log('@@@ http client', !!this.http);
   }
 
   /**

@@ -13,7 +13,6 @@ export class WebsocketService {
   constructor() {
     const socket = new WebSocket(WS_SERVER_URL);
     socket.onopen = () => {
-      console.log('Successfully connected to the WebSocket at', WS_SERVER_URL);
       // When the connection is done, emit the WebSocket instance
       this.ws$.next(socket);
     };
