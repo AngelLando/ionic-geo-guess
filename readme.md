@@ -35,7 +35,7 @@ Node.js 12.x
 
 ## Usage
 
-### Install the dependecies
+### Install the dependencies
 ```
 git clone git@github.com/AngelLando/ionic-geo-guess
 cd ionic-geo-guess
@@ -49,13 +49,14 @@ cd ionic-geo-guess\src\environments
 
 * Duplicate this file to create a copy named environment.prod.ts and replace the content by the following:
 
-(replace the qimgUrl with your secret key)
+(replace the qimgSecret with your secret key)
 
 ```
 export const environment = {
   production: false,
   apiUrl: 'https://comem-archioweb-2019-2020-g.herokuapp.com',
-    qimgUrl: '...'
+    qimgUrl: 'https://comem-qimg.herokuapp.com/api',
+    qimgSecret: '',
 };
 ```
 
