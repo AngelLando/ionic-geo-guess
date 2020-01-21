@@ -1,7 +1,7 @@
 # Hybrid app Geo Guess
 Geo Guess is a hybrid mobile app developped with Ionic and Angular. It is about users who post thumbnails with a certain location and/or try to guess where photos from the thumbnails were taken.
 
-A user can:
+## A user can:
 
 * create an account
 * login/logout
@@ -16,11 +16,11 @@ A user can:
 * change his profile information (username, country, city)
 * delete his account
 
-Not yet implemented:
+## Not yet implemented:
 
 * active/disactivate notifications
 
-What could be improved:
+## What could be improved:
 
 * loading time when a user post a thumbnail
 * loading time to see all guesses for a thumbnail
