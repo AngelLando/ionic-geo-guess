@@ -56,7 +56,7 @@ export const environment = {
   production: false,
   apiUrl: 'https://comem-archioweb-2019-2020-g.herokuapp.com',
     qimgUrl: 'https://comem-qimg.herokuapp.com/api',
-    qimgSecret: '',
+    qimgSecret: ''
 };
 ```
 
