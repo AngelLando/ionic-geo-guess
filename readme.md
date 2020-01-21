@@ -24,7 +24,11 @@ What could be improved:
 
 * loading time when a user post a thumbnail
 * loading time to see all guesses for a thumbnail
-* improvements on the API: a user shouldn't be able to make more than one guess on a thumbnail (only frontend implemented for the moment)
+* improvements on the API:
+  * for a user, add the field "profile_picture"
+  * a user should not be able to make more than one guess on a thumbnail (only frontend implemented for the moment)
+  * a user should be able to change his password
+
 
 ## Requirements
 Node.js 12.x
